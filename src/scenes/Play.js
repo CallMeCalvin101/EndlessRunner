@@ -4,16 +4,19 @@ class Play extends Phaser.Scene {
     }
 
     preload() {
+        //place back ground 
+        this.load.image('magicworld', './assets/magicworld.png');
         // Test Assets
         this.load.spritesheet('button', './assets/button.png', {frameWidth: 48, frameHeight: 24, startFrame: 0, endFrame: 1});
     }
 
     create() {
+        //place back ground 
+        this.magicworld = this.add.image(200,220,'magicworld');
         // Variable for cursor
         gamePointer = this.input.activePointer;
 
         // Test UI
-        this.add.rectangle(0, 0, game.config.width, game.config.height, 0xFFFFFF).setOrigin(0, 0);
         this.add.rectangle(0, 2 * game.config.height / 3, game.config.width, game.config.height / 3, 0xFF7254).setOrigin(0, 0);
 
         // Test Buttons
@@ -29,6 +32,8 @@ class Play extends Phaser.Scene {
     }
 
     update() {
+        
+
         this.testButton1.update();
         this.testButton2.update();
         this.testButton3.update();
