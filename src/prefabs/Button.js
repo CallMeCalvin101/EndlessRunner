@@ -11,6 +11,14 @@ class Button extends Phaser.GameObjects.Sprite {
         // Variables to track button behavior
         this.isClickable = false;
         this.refreshTime = 100;
+
+        this.setInteractive();
+        this.on('pointerdown', () => {
+            if (this.isClickable == true) {
+                this.isClickable = false;
+                this.refreshTime = (Math.floor(Math.random() * 5) + 1) * 100;
+            }
+        })
     }
 
     update() {
@@ -24,13 +32,13 @@ class Button extends Phaser.GameObjects.Sprite {
             this.isClickable = true;
         }
 
-        // If mouse click is in button and button is on, set button to off resets timer to a random time
+        /* If mouse click is in button and button is on, set button to off resets timer to a random time
         if (gamePointer.x < this.x + this.width && gamePointer.x > this.x &&
             gamePointer.y < this.y + this.height && gamePointer.y > this.y &&
             (gamePointer.isDown || gamePointer.wasTouched) && this.isClickable == true) {
                 this.isClickable = false;
                 this.refreshTime = (Math.floor(Math.random() * 5) + 1) * 100;
-        }
+        } */
 
         // Toggles Button Images
         if (this.isClickable == true) {

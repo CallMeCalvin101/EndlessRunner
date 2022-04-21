@@ -32,8 +32,6 @@ class Play extends Phaser.Scene {
     }
 
     update() {
-        
-
         this.testButton1.update();
         this.testButton2.update();
         this.testButton3.update();
