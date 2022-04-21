@@ -11,6 +11,7 @@ class Button extends Phaser.GameObjects.Sprite {
         // Variables to track button behavior
         this.isClickable = false;
         this.refreshTime = 100;
+        this.test = 0;
     }
 
     update() {
@@ -39,6 +40,7 @@ class Button extends Phaser.GameObjects.Sprite {
             this.setFrame(0);
         }
     }
+
 
     reset() {
         this.isClickable = false;
