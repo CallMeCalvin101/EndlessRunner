@@ -29,6 +29,8 @@ class Play extends Phaser.Scene {
         this.testButton7 = new Button(this, game.config.width/2 - 60, game.config.height * (5/6) + 36, 'button').setOrigin(0);
         this.testButton8 = new Button(this, game.config.width/2, game.config.height * (5/6) + 36, 'button').setOrigin(0);
         this.testButton9 = new Button(this, game.config.width/2 + 60, game.config.height * (5/6) + 36, 'button').setOrigin(0);
+        this.testButton10= new Button(this, game.config.width/2 + 60, game.config.height * (5/6) + 60, 'button');
+        this.bar = new healthbar(this, 100, 100);
     }
 
     update() {
