@@ -8,6 +8,7 @@ class Play extends Phaser.Scene {
         this.load.image('magicworld', './assets/magicworld.png');
         // Test Assets
         this.load.spritesheet('button', './assets/button.png', {frameWidth: 48, frameHeight: 24, startFrame: 0, endFrame: 1});
+        this.load.spritesheet('miku', './assets/miku.png', {frameWidth: 50, frameHeight: 50, startFrame: 0, endFrame: 3});
     }
 
     create() {
@@ -29,8 +30,14 @@ class Play extends Phaser.Scene {
         this.testButton7 = new Button(this, game.config.width/2 - 60, game.config.height * (5/6) + 36, 'button').setOrigin(0);
         this.testButton8 = new Button(this, game.config.width/2, game.config.height * (5/6) + 36, 'button').setOrigin(0);
         this.testButton9 = new Button(this, game.config.width/2 + 60, game.config.height * (5/6) + 36, 'button').setOrigin(0);
-        this.testButton10= new Button(this, game.config.width/2 + 60, game.config.height * (5/6) + 60, 'button');
-        this.bar = new healthbar(this, 100, 100);
+        this.anims.create({
+            key: 'a1',            
+            frames: this.anims.generateFrameNumbers('miku', {start: 0, end: 3, first: 0}),
+            frameRate: 4,
+            repeat: -1
+        });
+        this.bar = new player(this, 100, 100,'miku',0);
+        this.bar.play('a1');
     }
 
     update() {
