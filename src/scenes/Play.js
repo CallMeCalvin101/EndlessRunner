@@ -12,6 +12,19 @@ class Play extends Phaser.Scene {
     }
 
     create() {
+        //variables/settings for physics engine
+        this.ACCELERATION = 2000;
+        this.MAX_X_VEL = 500; 
+        this.MAX_Y_VEL = 500;
+        this.DRAG = 4000;   
+
+        //CREATE OBSTACLE ANIMATIONS
+        this.anims.create({key: 'bugsprite',frames: [{key: 'bugsprite',frame: "bug1.png"},  //bugsprite animation to be replaced by whatever standard obstacle animation is (spirits/ghosts wiggle?)
+            {key: 'bugsprite',frame: "bug2.png"}],frameRate: 10,repeat: -1});
+        this.anims.create({key: 'hurtbug',frames: [{key: 'hurtbug',frame: "hurtbug1.png"}, //bugend animation to be replaced with obstacle broken/hit by player animation
+            {key: 'hurtbug',frame: "hurtbug2.png"}],frameRate: 500,repeat: 0});
+
+            
         //place back ground 
         this.magicworld = this.add.image(200,220,'magicworld');
         // Variable for cursor
@@ -41,16 +54,50 @@ class Play extends Phaser.Scene {
     }
 
     update() {
-        
+        if(this.obstacle01.body.blocked.left)       //if obstacle hits left side of screen, reset it, play standard animation (instead of being broken animation if player has collided with obstacle)
+        {
+            // console.log("blocked on left") //for debugging
+            this.obstacle01.x = 1000;
+            this.obstacle01.body.collideWorldBounds = true; 
+            this.obstacle01.play("bugsprite");
+        }
 
-        this.testButton1.update();
-        this.testButton2.update();
-        this.testButton3.update();
-        this.testButton4.update();
-        this.testButton5.update();
-        this.testButton6.update();
-        this.testButton7.update();
-        this.testButton8.update();
-        this.testButton9.update();
+        this.obstacle01.x -= 5;     //obstacles are constantly moving
+
+        //player movement based on arrow keys
+
+        if(cursors.left.isDown) {
+            this.character.body.setAccelerationX(-this.ACCELERATION);
+            this.character.setFlip(true, false);
+            // see: https://photonstorm.github.io/phaser3-docs/Phaser.GameObjects.Components.Animation.html#play__anchor
+            // play(key [, ignoreIfPlaying] [, startFrame])
+            // add this.character.anims.play('key for walking animation', true);
+
+        } else if(cursors.right.isDown) {
+            this.character.body.setAccelerationX(this.ACCELERATION);
+            this.character.resetFlip();
+            // add this.character.anims.play('key for walking animation', true);
+        
+        } else if(cursors.up.isDown) {
+            this.character.body.setAccelerationY(-this.ACCELERATION);
+            this.character.resetFlip();
+            // add this.character.anims.play('key for walking animation', true);
+
+        } else if(cursors.down.isDown) {
+            this.character.body.setAccelerationY(this.ACCELERATION);
+            this.character.resetFlip();
+            // add this.character.anims.play('key for walking animation', true);
+        }
+        
+        else {
+            // set acceleration to 0 so DRAG will take over
+            this.character.body.setAccelerationX(0);
+            this.character.body.setAccelerationY(0);
+            this.character.body.setDragX(this.DRAG);
+            this.character.body.setDragY(this.DRAG);
+        }
+
+       
+
     }
 }
