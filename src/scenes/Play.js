@@ -54,15 +54,16 @@ class Play extends Phaser.Scene {
         
         
         // Test Buttons
-        this.testButton1 = new Button(this, game.config.width/2 - 60, game.config.height * (5/6) - 36, 'button').setOrigin(0);
-        this.testButton2 = new Button(this, game.config.width/2, game.config.height * (5/6) - 36, 'button').setOrigin(0);
-        this.testButton3 = new Button(this, game.config.width/2 + 60, game.config.height * (5/6) - 36, 'button').setOrigin(0);
-        this.testButton4 = new Button(this, game.config.width/2 - 60, game.config.height * (5/6), 'button').setOrigin(0);
-        this.testButton5 = new Button(this, game.config.width/2, game.config.height * (5/6), 'button').setOrigin(0);
-        this.testButton6 = new Button(this, game.config.width/2 + 60, game.config.height * (5/6), 'button').setOrigin(0);
-        this.testButton7 = new Button(this, game.config.width/2 - 60, game.config.height * (5/6) + 36, 'button').setOrigin(0);
-        this.testButton8 = new Button(this, game.config.width/2, game.config.height * (5/6) + 36, 'button').setOrigin(0);
-        this.testButton9 = new Button(this, game.config.width/2 + 60, game.config.height * (5/6) + 36, 'button').setOrigin(0);
+        this.testButtons = this.add.group();
+        for (let i = 0; i < 5; i++) {
+            for (let j = 0; j < 5; j++) {
+                let testButton = new Button(this, 90 + (60 * i), game.config.height * (2/3) + 20 + (30 * j), 'button').setOrigin(0, 0);
+                this.testButtons.add(testButton);
+            }
+        }
+
+        this.testButtons.runChildUpdate = true;
+        
         //create player animate
         this.anims.create({
             key: 'a1',            
