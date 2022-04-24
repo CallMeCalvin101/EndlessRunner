@@ -11,7 +11,11 @@ class Play extends Phaser.Scene {
         this.load.image('blocker','./assets/bar.png');
         // Test Assets
         this.load.spritesheet('button', './assets/button.png', {frameWidth: 48, frameHeight: 24, startFrame: 0, endFrame: 1});
-        this.load.spritesheet('miku', './assets/player.png', {frameWidth: 60, frameHeight: 75, startFrame: 0, endFrame: 2});
+        this.load.spritesheet('miku', './assets/player.png', {frameWidth: 60, frameHeight: 75, startFrame: 0, endFrame: 2});       
+        this.load.spritesheet('bugsprite', './assets/bugsprite.png', {frameWidth: 64, frameHeight: 50, startFrame: 0, endFrame: 3});
+        this.load.spritesheet('hurtbug', './assets/hurtbug.png', {frameWidth: 64, frameHeight: 50, startFrame: 0, endFrame: 3});
+
+
     }
 
     create() {
@@ -23,12 +27,23 @@ class Play extends Phaser.Scene {
         this.MAX_Y_VEL = 500;
         this.DRAG = 4000;   
 
-        //CREATE OBSTACLE ANIMATIONS
-        this.anims.create({key: 'bugsprite',frames: [{key: 'bugsprite',frame: "bug1.png"},  //bugsprite animation to be replaced by whatever standard obstacle animation is (spirits/ghosts wiggle?)
-            {key: 'bugsprite',frame: "bug2.png"}],frameRate: 10,repeat: -1});
-        this.anims.create({key: 'hurtbug',frames: [{key: 'hurtbug',frame: "hurtbug1.png"}, //bugend animation to be replaced with obstacle broken/hit by player animation
-            {key: 'hurtbug',frame: "hurtbug2.png"}],frameRate: 500,repeat: 0});
+        //CREATE bug/obstacle/ghost ANIMATIONS
+        this.anims.create({
+            key: 'bugsprite',            
+            frames: this.anims.generateFrameNumbers('bugsprite', {start: 0, end: 1, first: 0}),
+            frameRate: 8,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'hurtbug',            
+            frames: this.anims.generateFrameNumbers('hurtbug', {start: 0, end: 1, first: 0}),
+            frameRate: 50,
+            repeat: 0
+        });
 
+        this.time.delayedCall(2500, () => { 
+            console.log("time"); 
+        });
             
         //place back ground 
         this.magicworld = this.add.image(200,220,'magicworld');
@@ -77,6 +92,17 @@ class Play extends Phaser.Scene {
         },this)
         // Add a new hp bar deatures: Hp.increase(var) Hp.decrease(var);
         this.hp= new Hp(this,game.config.width / 3, game.config.height/2+120);
+
+        this.obstacleGroup = this.add.group({
+            runChildUpdate: true    // make sure update runs on group children
+        })
+
+        this.obstacle01 = this.physics.add.sprite(400, 100, 'bugsprite');  //create obstacle sprite
+        this.obstacle01.body.collideWorldBounds = true; 
+        this.obstacle01.play("bugsprite"); //start wiggle animation
+
+        this.obstacleGroup.add(this.obstacle01);
+
     }
     update() {
         //////////////////////// PLAYER MOVEMENT ///////////////////////////
@@ -93,19 +119,36 @@ class Play extends Phaser.Scene {
             }
         }
         // end of borrowing code
-        //////////////////////// PLAYER MOVEMENT ///////////////////////////
 
-        //if(this.obstacle01.body.blocked.left)       //if obstacle hits left side of screen, reset it, play standard animation (instead of being broken animation if player has collided with obstacle)
-        //{
+
+
+        if(this.obstacle01.body.blocked.left)       
+        //if obstacle hits left side of screen, reset it, play standard animation (instead of being broken animation if player has collided with obstacle)
+        {
             // console.log("blocked on left") //for debugging
-        //    this.obstacle01.x = 1000;
-        //    this.obstacle01.body.collideWorldBounds = true; 
-        //    this.obstacle01.play("bugsprite");
-        //}
+           this.obstacle01.x = 1000;
+           this.obstacle01.body.collideWorldBounds = true; 
+           this.obstacle01.play("bugsprite");
+        }
 
-        //this.obstacle01.x -= 5;     //obstacles are constantly moving
+        this.obstacle01.x -= 2.5;     //obstacles are constantly moving
 
-        //player movement based on arrow keys        
+        this.physics.add.overlap(this.player, this.obstacleGroup, obstacleHit, null, this); 
+        //polling to see if player has collided with any obstacle in obstacleGroup. If so , run obstacleHit Function
+        function obstacleHit (player, obstacle) //function that runs when player hits obstacle during polling
+        {
+            if(!(obstacle.anims.getName() == "hurtbug")){  
+                //if statement added since obstacleHit is called in all the different frames where player and obstacle are overlapping
+                //if statement allows code below to only happen once (the first time collision happens between player and member of obstacleGroup)
+                console.log("collide"); //debugging console log
+                obstacle.play("hurtbug"); // obstacle animation plays that shows it got hit by player (breaks/gets damaged)
+                //insert code to decrease player health + health bar
+                //insert code to play animation for character to make it appear hurt (can also just be changing the tint of the sprite.)
+            }
+        }
+
+
+      
     }
    
 }
