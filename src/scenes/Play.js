@@ -88,7 +88,7 @@ class Play extends Phaser.Scene {
         this.testButtons = this.add.group();
         for (let i = 0; i < 5; i++) {
             for (let j = 0; j < 5; j++) {
-                let testButton = new Button(this, 90 + (60 * i), game.config.height * (2/3) + 20 + (30 * j), 'button', 0, this.hp).setOrigin(0, 0);
+                let testButton = new Button(this, 90 + (60 * i), game.config.height * (2/3) + 40 + (30 * j), 'button', 0, this.hp).setOrigin(0, 0);
                 this.testButtons.add(testButton);
             }
         }
