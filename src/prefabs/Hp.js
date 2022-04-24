@@ -20,7 +20,7 @@ class Hp {
     }
 
     increase(addhp){
-        this.value -= addhp;
+        this.value += addhp;
         if(this.value >= 100){
             this.value = 100;
         }
