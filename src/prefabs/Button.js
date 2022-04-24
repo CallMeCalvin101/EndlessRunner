@@ -14,6 +14,7 @@ class Button extends Phaser.GameObjects.Sprite {
         this.gain = 2;
 
         // If tap/click is in button and button is on, set button to off resets timer to a random time
+        // Also increases the hp
         this.setInteractive();
         this.on('pointerdown', () => {
             if (this.isClickable == true) {
