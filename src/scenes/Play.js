@@ -146,6 +146,8 @@ class Play extends Phaser.Scene {
                 obstacle.play("hurtbug"); // obstacle animation plays that shows it got hit by player (breaks/gets damaged)
                 //insert code to decrease player health + health bar
                 //insert code to play animation for character to make it appear hurt (can also just be changing the tint of the sprite.)
+                //decrease hp
+                this.hp.decrease(5);
             }
         }
 
