@@ -16,7 +16,6 @@ class Hp {
             this.value = 0;
         }
         this.draw();
-        return (this.value ==0);
     }
 
     increase(addhp){
@@ -25,8 +24,13 @@ class Hp {
             this.value = 100;
         }
         this.draw();
-        return (this.value ==100);
     }
+
+    // Get Function that returns the current hp
+    getHP() {
+        return this.value;
+    }
+
     draw(){
         this.hbar.clear();
         this.hbar.fillStyle(0x000000);
