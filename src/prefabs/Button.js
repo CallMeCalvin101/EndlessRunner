@@ -4,13 +4,14 @@
  */
 
 class Button extends Phaser.GameObjects.Sprite {
-    constructor(scene, x, y, texture, frame) {
+    constructor(scene, x, y, texture, frame, hp) {
         super(scene, x, y, texture, frame);
         scene.add.existing(this);
 
         // Variables to track button behavior
         this.isClickable = false;
         this.refreshTime = 100;
+        this.gain = 2;
 
         // If tap/click is in button and button is on, set button to off resets timer to a random time
         this.setInteractive();
@@ -18,6 +19,7 @@ class Button extends Phaser.GameObjects.Sprite {
             if (this.isClickable == true) {
                 this.isClickable = false;
                 this.refreshTime = (Math.floor(Math.random() * 5) + 1) * 100;
+                hp.increase(this.gain);
             }
         });
     }

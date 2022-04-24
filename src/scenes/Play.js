@@ -52,18 +52,7 @@ class Play extends Phaser.Scene {
         
         // Test UI
         this.add.rectangle(0, 2 * game.config.height / 3, game.config.width, game.config.height / 3, 0xFF7254).setOrigin(0, 0);
-        
-        
-        // Test Buttons
-        this.testButtons = this.add.group();
-        for (let i = 0; i < 5; i++) {
-            for (let j = 0; j < 5; j++) {
-                let testButton = new Button(this, 90 + (60 * i), game.config.height * (2/3) + 20 + (30 * j), 'button').setOrigin(0, 0);
-                this.testButtons.add(testButton);
-            }
-        }
 
-        this.testButtons.runChildUpdate = true;
         
         //create player animate
         this.anims.create({
@@ -91,8 +80,20 @@ class Play extends Phaser.Scene {
             //////////////////////////////////////////////////////
             //I need to add more logic here to keep the player stay in the top half
         },this)
+        
         // Add a new hp bar deatures: Hp.increase(var) Hp.decrease(var);
         this.hp= new Hp(this,game.config.width / 3, game.config.height/2+120);
+
+        // Test Buttons
+        this.testButtons = this.add.group();
+        for (let i = 0; i < 5; i++) {
+            for (let j = 0; j < 5; j++) {
+                let testButton = new Button(this, 90 + (60 * i), game.config.height * (2/3) + 20 + (30 * j), 'button', 0, this.hp).setOrigin(0, 0);
+                this.testButtons.add(testButton);
+            }
+        }
+
+        this.testButtons.runChildUpdate = true;
 
         this.obstacleGroup = this.add.group({
             runChildUpdate: true    // make sure update runs on group children
