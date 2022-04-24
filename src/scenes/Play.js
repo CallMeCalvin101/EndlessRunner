@@ -11,7 +11,7 @@ class Play extends Phaser.Scene {
         this.load.image('blocker','./assets/bar.png');
         // Test Assets
         this.load.spritesheet('button', './assets/button.png', {frameWidth: 48, frameHeight: 24, startFrame: 0, endFrame: 1});
-        this.load.spritesheet('miku', './assets/miku.png', {frameWidth: 50, frameHeight: 50, startFrame: 0, endFrame: 3});
+        this.load.spritesheet('miku', './assets/player.png', {frameWidth: 60, frameHeight: 75, startFrame: 0, endFrame: 2});
     }
 
     create() {
@@ -52,7 +52,7 @@ class Play extends Phaser.Scene {
         //create player animate
         this.anims.create({
             key: 'a1',            
-            frames: this.anims.generateFrameNumbers('miku', {start: 0, end: 3, first: 0}),
+            frames: this.anims.generateFrameNumbers('miku', {start: 0, end: 2, first: 0}),
             frameRate: 4,
             repeat: -1
         });
@@ -67,13 +67,14 @@ class Play extends Phaser.Scene {
         this.input.on('pointerdown', function (gamePointer)
         {
             //this.arrow.setPosition(gamePointer.x, gamePointer.y);
+            if(gamePointer.y<=2*game.config.height/3){
             this.ptr.x=gamePointer.x;
             this.ptr.y=gamePointer.y;
             this.player.play('a1');
-            this.physics.moveToObject(this.player, gamePointer, 400);  //player speed, can always change         
+            this.physics.moveToObject(this.player, gamePointer, 400); } //player speed, can always change         
             //////////////////////////////////////////////////////
             //I need to add more logic here to keep the player stay in the top half
-        },this);
+        },this)
         // Add a new hp bar deatures: Hp.increase(var) Hp.decrease(var);
         this.hp= new Hp(this,game.config.width / 3, game.config.height/2+120);
     }
