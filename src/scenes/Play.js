@@ -93,49 +93,18 @@ class Play extends Phaser.Scene {
         }
         // end of borrowing code
         //////////////////////// PLAYER MOVEMENT ///////////////////////////
-        if(this.obstacle01.body.blocked.left)       //if obstacle hits left side of screen, reset it, play standard animation (instead of being broken animation if player has collided with obstacle)
-        {
+
+        //if(this.obstacle01.body.blocked.left)       //if obstacle hits left side of screen, reset it, play standard animation (instead of being broken animation if player has collided with obstacle)
+        //{
             // console.log("blocked on left") //for debugging
-            this.obstacle01.x = 1000;
-            this.obstacle01.body.collideWorldBounds = true; 
-            this.obstacle01.play("bugsprite");
-        }
+        //    this.obstacle01.x = 1000;
+        //    this.obstacle01.body.collideWorldBounds = true; 
+        //    this.obstacle01.play("bugsprite");
+        //}
 
-        this.obstacle01.x -= 5;     //obstacles are constantly moving
+        //this.obstacle01.x -= 5;     //obstacles are constantly moving
 
-        //player movement based on arrow keys
-
-        if(cursors.left.isDown) {
-            this.character.body.setAccelerationX(-this.ACCELERATION);
-            this.character.setFlip(true, false);
-            // see: https://photonstorm.github.io/phaser3-docs/Phaser.GameObjects.Components.Animation.html#play__anchor
-            // play(key [, ignoreIfPlaying] [, startFrame])
-            // add this.character.anims.play('key for walking animation', true);
-
-        } else if(cursors.right.isDown) {
-            this.character.body.setAccelerationX(this.ACCELERATION);
-            this.character.resetFlip();
-            // add this.character.anims.play('key for walking animation', true);
-        
-        } else if(cursors.up.isDown) {
-            this.character.body.setAccelerationY(-this.ACCELERATION);
-            this.character.resetFlip();
-            // add this.character.anims.play('key for walking animation', true);
-
-        } else if(cursors.down.isDown) {
-            this.character.body.setAccelerationY(this.ACCELERATION);
-            this.character.resetFlip();
-            // add this.character.anims.play('key for walking animation', true);
-        }
-        
-        else {
-            // set acceleration to 0 so DRAG will take over
-            this.character.body.setAccelerationX(0);
-            this.character.body.setAccelerationY(0);
-            this.character.body.setDragX(this.DRAG);
-            this.character.body.setDragY(this.DRAG);
-        }
- 
+        //player movement based on arrow keys        
     }
    
 }
