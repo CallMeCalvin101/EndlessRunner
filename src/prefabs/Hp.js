@@ -4,7 +4,7 @@ class Hp {
         this.x = x;
         this.y = y;
         this.value = 100;
-        this.pval = 0.8;
+        this.pval = 1;
         this.draw();
         this.healthbar=scene.add.existing(this.hbar);
 
@@ -34,9 +34,10 @@ class Hp {
     draw(){
         this.hbar.clear();
         this.hbar.fillStyle(0x000000);
-        this.hbar.fillRect(this.x, this.y, 200,10);
+        this.hbar.fillRect(this.x, this.y, 104,14);
         this.hbar.fillStyle(0xffffff);
-        this.hbar.fillRect(this.x+2, this.y+2, 180, 10);
+        this.hbar.fillRect(this.x+2, this.y+2, 100, 10);
+        this.hbar.fillStyle(0x00ff00);
         var d = Math.floor(this.pval* this.value);
         this.hbar.fillRect(this.x+2, this.y+2,d,10);
     }
