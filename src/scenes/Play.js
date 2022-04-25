@@ -23,8 +23,7 @@ class Play extends Phaser.Scene {
         this.ptr = new Phaser.Math.Vector2();
         //variables/settings for physics engine
         this.ACCELERATION = 2000;
-        this.MAX_X_VEL = 500; 
-        this.MAX_Y_VEL = 500;
+        this.MAX_SPEED = 100; 
         this.DRAG = 4000;   
 
         //CREATE bug/obstacle/ghost ANIMATIONS
@@ -76,7 +75,7 @@ class Play extends Phaser.Scene {
             this.ptr.x=gamePointer.x;
             this.ptr.y=gamePointer.y;
             this.player.play('a1');
-            this.physics.moveToObject(this.player, gamePointer, 400); } //player speed, can always change         
+            this.physics.moveToObject(this.player, gamePointer, this.MAX_SPEED); } //player speed, can always change 
             //////////////////////////////////////////////////////
             //I need to add more logic here to keep the player stay in the top half
         },this)
