@@ -24,9 +24,9 @@ class Play extends Phaser.Scene {
         this.ptr = new Phaser.Math.Vector2();
         //variables/settings for physics engine
         this.ACCELERATION = 2000;
-        this.MAX_SPEED = 600; 
+        this.MAX_SPEED = 150; 
         this.DRAG = 4000;   
-        this.passiveHPLoss = 2;
+        this.passiveHPLoss = 3;
         this.ONE_SEC = 60;
         this.emenyHPLoss = 30;
         this.enemySpeed = -2.5;
@@ -70,7 +70,7 @@ class Play extends Phaser.Scene {
         this.blocker= this.physics.add.image(game.config.width/2,2*game.config.height/3,'blocker');
         this.blocker.setImmovable(true);
         this.player = this.physics.add.sprite(100,100,'miku'); 
-        this.player.setScale(0.5);
+        this.player.setScale(0.75);
         this.player.setCollideWorldBounds(true);  
         this.physics.add.collider(this.player, this.blocker);
         // move player to the clicked/tapped position
@@ -111,6 +111,10 @@ class Play extends Phaser.Scene {
         });
 
         this.time.delayedCall(2750, () => { 
+            this.addEnemy(); 
+        });
+
+        this.time.delayedCall(2500 * 5, () => { 
             this.addEnemy(); 
         });
 

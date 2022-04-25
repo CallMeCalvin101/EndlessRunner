@@ -1,7 +1,7 @@
 class Obstacle extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, velocity, texture) {
         // call Phaser Physics Sprite constructor
-        super(scene, game.config.width, Phaser.Math.Between(0, game.config.height * (2/3)), texture); 
+        super(scene, game.config.width, Phaser.Math.Between(0, (game.config.height * (2/3))) - 30, texture); 
         // set up physics sprite
         scene.add.existing(this);               // add to existing scene, displayList, updateList
         scene.physics.add.existing(this);       // add to physics system
