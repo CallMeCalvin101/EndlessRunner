@@ -27,7 +27,7 @@ class Play extends Phaser.Scene {
         this.DRAG = 4000;   
         this.passiveHPLoss = 2;
         this.ONE_SEC = 60;
-        this.emenyHPLoss = 50;
+        this.emenyHPLoss = 30;
 
         //CREATE bug/obstacle/ghost ANIMATIONS
         this.anims.create({
