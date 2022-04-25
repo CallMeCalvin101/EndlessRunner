@@ -25,6 +25,8 @@ class Play extends Phaser.Scene {
         this.ACCELERATION = 2000;
         this.MAX_SPEED = 100; 
         this.DRAG = 4000;   
+        this.passiveHPLoss = 2;
+        this.ONE_SEC = 60;
 
         //CREATE bug/obstacle/ghost ANIMATIONS
         this.anims.create({
@@ -106,6 +108,9 @@ class Play extends Phaser.Scene {
 
     }
     update() {
+        // Decrements HP
+        this.hp.decrease(this.passiveHPLoss / this.ONE_SEC);
+
         //////////////////////// PLAYER MOVEMENT ///////////////////////////
         // calculate the distance between player and the clicked/tapped spot
         // line xx~ xx from https://phaser.io/examples/v2/input/follow-mouse

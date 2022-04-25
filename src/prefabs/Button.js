@@ -11,7 +11,7 @@ class Button extends Phaser.GameObjects.Sprite {
         // Variables to track button behavior
         this.isClickable = false;
         this.refreshTime = (Math.floor(Math.random() * 10) + 5) * 100;
-        this.gain = 2;
+        this.gain = 10;
 
         // If tap/click is in button and button is on, set button to off resets timer to a random time
         // Also increases the hp
