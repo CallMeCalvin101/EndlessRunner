@@ -66,6 +66,7 @@ class Play extends Phaser.Scene {
         this.blocker= this.physics.add.image(game.config.width/2,2*game.config.height/3,'blocker');
         this.blocker.setImmovable(true);
         this.player = this.physics.add.sprite(100,100,'miku'); 
+        this.player.setScale(0.5);
         this.player.setCollideWorldBounds(true);  
         this.physics.add.collider(this.player, this.blocker);
         // move player to the clicked/tapped position
@@ -76,7 +77,7 @@ class Play extends Phaser.Scene {
             this.ptr.x=gamePointer.x;
             this.ptr.y=gamePointer.y;
             this.player.play('a1');
-            this.physics.moveToObject(this.player, gamePointer, 400); } //player speed, can always change         
+            this.physics.moveToObject(this.player, gamePointer, 650); } //player speed, can always change         
             //////////////////////////////////////////////////////
             //I need to add more logic here to keep the player stay in the top half
         },this)
