@@ -17,7 +17,8 @@ let config = {
     scene: [Menu, Play]
 }
 
+let game = new Phaser.Game(config);
+
 let cursors;
 let gamePointer;
-
-let game = new Phaser.Game(config);
+let centerX = game.config.width/2;

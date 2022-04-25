@@ -14,6 +14,7 @@ class Play extends Phaser.Scene {
         this.load.spritesheet('miku', './assets/player.png', {frameWidth: 60, frameHeight: 75, startFrame: 0, endFrame: 2});       
         this.load.spritesheet('bugsprite', './assets/bugsprite.png', {frameWidth: 64, frameHeight: 50, startFrame: 0, endFrame: 3});
         this.load.spritesheet('hurtbug', './assets/hurtbug.png', {frameWidth: 64, frameHeight: 50, startFrame: 0, endFrame: 3});
+        this.load.spritesheet('ghost', './assets/ghost.png', {frameWidth: 60, frameHeight: 50, startFrame: 0, endFrame: 4});
 
 
     }
@@ -23,11 +24,12 @@ class Play extends Phaser.Scene {
         this.ptr = new Phaser.Math.Vector2();
         //variables/settings for physics engine
         this.ACCELERATION = 2000;
-        this.MAX_SPEED = 100; 
+        this.MAX_SPEED = 150; 
         this.DRAG = 4000;   
         this.passiveHPLoss = 2;
         this.ONE_SEC = 60;
         this.emenyHPLoss = 30;
+        this.enemySpeed = -2.5;
 
         //CREATE bug/obstacle/ghost ANIMATIONS
         this.anims.create({
@@ -101,6 +103,15 @@ class Play extends Phaser.Scene {
             runChildUpdate: true    // make sure update runs on group children
         })
 
+        this.time.delayedCall(2500, () => { 
+            this.addEnemy(); 
+        });
+
+        this.time.delayedCall(2750, () => { 
+            this.addEnemy(); 
+        });
+
+        /*
         this.obstacle01 = this.physics.add.sprite(400, 100, 'bugsprite');  //create obstacle sprite
         this.obstacle01.body.collideWorldBounds = true; 
         this.obstacle01.play("bugsprite"); //start wiggle animation
@@ -115,9 +126,15 @@ class Play extends Phaser.Scene {
 
         this.obstacleGroup.add(this.obstacle01);
         this.obstacleGroup.add(this.obstacle02);
-        this.obstacleGroup.add(this.obstacle03);
+        this.obstacleGroup.add(this.obstacle03);*/
 
     }
+
+    addEnemy() {
+        let enemy = new Obstacle(this, this.enemySpeed, 'ghost');
+        this.obstacleGroup.add(enemy);
+    }
+
     update() {
         // Decrements HP
         this.hp.decrease(this.passiveHPLoss / this.ONE_SEC);
