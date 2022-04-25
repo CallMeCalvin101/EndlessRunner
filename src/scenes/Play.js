@@ -24,7 +24,7 @@ class Play extends Phaser.Scene {
         this.ptr = new Phaser.Math.Vector2();
         //variables/settings for physics engine
         this.ACCELERATION = 2000;
-        this.MAX_SPEED = 150; 
+        this.MAX_SPEED = 600; 
         this.DRAG = 4000;   
         this.passiveHPLoss = 2;
         this.ONE_SEC = 60;
@@ -70,6 +70,7 @@ class Play extends Phaser.Scene {
         this.blocker= this.physics.add.image(game.config.width/2,2*game.config.height/3,'blocker');
         this.blocker.setImmovable(true);
         this.player = this.physics.add.sprite(100,100,'miku'); 
+        this.player.setScale(0.5);
         this.player.setCollideWorldBounds(true);  
         this.physics.add.collider(this.player, this.blocker);
         // move player to the clicked/tapped position
@@ -79,8 +80,10 @@ class Play extends Phaser.Scene {
             if(gamePointer.y<=2*game.config.height/3){
             this.ptr.x=gamePointer.x;
             this.ptr.y=gamePointer.y;
-            this.player.play('a1');
+            this.player.play('a1');                 
+
             this.physics.moveToObject(this.player, gamePointer, this.MAX_SPEED); } //player speed, can always change 
+
             //////////////////////////////////////////////////////
             //I need to add more logic here to keep the player stay in the top half
         },this)
@@ -179,6 +182,8 @@ class Play extends Phaser.Scene {
                 obstacle.play("hurtbug"); // obstacle animation plays that shows it got hit by player (breaks/gets damaged)
                 this.hp.decrease(this.emenyHPLoss);         //Decrements HP
                 //insert code to play animation for character to make it appear hurt (can also just be changing the tint of the sprite.)
+                //decrease hp
+                this.hp.decrease(5);
             }
         }
 
