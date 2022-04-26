@@ -11,7 +11,7 @@ class Play extends Phaser.Scene {
         this.load.image('blocker','./assets/bar.png');
         // Test Assets
         this.load.spritesheet('button', './assets/button.png', {frameWidth: 48, frameHeight: 24, startFrame: 0, endFrame: 1});
-        this.load.spritesheet('miku', './assets/player.png', {frameWidth: 60, frameHeight: 75, startFrame: 0, endFrame: 2});       
+        this.load.spritesheet('miku', './assets/player.png', {frameWidth: 60, frameHeight: 75, startFrame: 0, endFrame: 11});       
         this.load.spritesheet('bugsprite', './assets/bugsprite.png', {frameWidth: 64, frameHeight: 50, startFrame: 0, endFrame: 3});
         this.load.spritesheet('hurtbug', './assets/hurtbug.png', {frameWidth: 64, frameHeight: 50, startFrame: 0, endFrame: 3});
         this.load.spritesheet('ghost', './assets/ghost.png', {frameWidth: 60, frameHeight: 50, startFrame: 0, endFrame: 4});
@@ -44,6 +44,13 @@ class Play extends Phaser.Scene {
             frameRate: 50,
             repeat: 0
         });
+        this.anims.create({
+            key: 'hurtbug',            
+            frames: this.anims.generateFrameNumbers('hurtbug', {start: 0, end: 1, first: 0}),
+            frameRate: 50,
+            repeat: 0
+        });
+
 
         this.time.delayedCall(2500, () => { 
             console.log("time"); 
@@ -60,10 +67,28 @@ class Play extends Phaser.Scene {
         
         //create player animate
         this.anims.create({
-            key: 'a1',            
+            key: 'left',            
             frames: this.anims.generateFrameNumbers('miku', {start: 0, end: 2, first: 0}),
             frameRate: 4,
-            repeat: -1
+            repeat: 1
+        });
+        this.anims.create({
+            key: 'down',            
+            frames: this.anims.generateFrameNumbers('miku', {start: 3, end: 5, first: 3}),
+            frameRate: 4,
+            repeat: 1
+        });
+        this.anims.create({
+            key: 'right',            
+            frames: this.anims.generateFrameNumbers('miku', {start: 6, end: 8, first: 6}),
+            frameRate: 4,
+            repeat: 1
+        });
+        this.anims.create({
+            key: 'up',            
+            frames: this.anims.generateFrameNumbers('miku', {start: 9, end: 11, first: 9}),
+            frameRate: 4,
+            repeat: 1
         });
 
         // player
@@ -73,6 +98,7 @@ class Play extends Phaser.Scene {
         this.player.setScale(0.75);
         this.player.setCollideWorldBounds(true);  
         this.physics.add.collider(this.player, this.blocker);
+
         // move player to the clicked/tapped position
         this.input.on('pointerdown', function (gamePointer)
         {
@@ -80,12 +106,19 @@ class Play extends Phaser.Scene {
             if(gamePointer.y<=2*game.config.height/3){
             this.ptr.x=gamePointer.x;
             this.ptr.y=gamePointer.y;
-            this.player.play('a1');                 
+            let xdifference = (Math.abs((Math.abs(this.player.x)) - (Math.abs(this.ptr.x))));
+            let ydifference = (Math.abs((Math.abs(this.player.y)) - (Math.abs(this.ptr.y))));
+            if(xdifference > ydifference){  //if player is moving more horizontal than vertical
+                if(this.player.x<this.ptr.x){this.player.play('right');}
+                else{this.player.play('left');}
+            }
+            if(ydifference > xdifference){  //if player is moving more vertical than horizontal
+                if(this.player.y<this.ptr.y){this.player.play('down');}
+                else{this.player.play('up');}
+            }
 
             this.physics.moveToObject(this.player, gamePointer, this.MAX_SPEED); } //player speed, can always change 
 
-            //////////////////////////////////////////////////////
-            //I need to add more logic here to keep the player stay in the top half
         },this)
         
         // Add a new hp bar deatures: Hp.increase(var) Hp.decrease(var);
