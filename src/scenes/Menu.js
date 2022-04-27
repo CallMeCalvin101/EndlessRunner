@@ -12,7 +12,7 @@ class Menu extends Phaser.Scene {
         this.nextButton.setInteractive();
 
         this.nextButton.on('pointerdown', () => {
-            this.scene.start('playScene');
+            this.scene.start('instructionsScene');
         });
     }
 }
