@@ -29,10 +29,11 @@ class Play extends Phaser.Scene {
             repeat: 0
         });
         this.anims.create({
-            key: 'hurtbug',            
-            frames: this.anims.generateFrameNumbers('hurtbug', {start: 0, end: 1, first: 0}),
-            frameRate: 50,
-            repeat: 0
+            key: 'ghostWalk',            
+            frames: this.anims.generateFrameNumbers('ghost', {start: 0, end: 4, first: 0}),
+            frameRate: 4,
+            yoyo: true,
+            repeat: -1
         });
 
 
@@ -40,8 +41,11 @@ class Play extends Phaser.Scene {
             console.log("time"); 
         });
             
+        // Test UI
+        this.add.rectangle(0, 2 * game.config.height / 3, game.config.width, game.config.height / 3, 0xFF7254).setOrigin(0, 0);
+
         //place back ground 
-        this.magicworld = this.add.image(200,220,'magicworld');
+        this.magicworld = this.add.tileSprite(0, 0, 480, game.config.height * (2/3), 'magicworld').setOrigin(0);
         // Variable for cursor
         gamePointer = this.input.activePointer;
         
@@ -138,10 +142,13 @@ class Play extends Phaser.Scene {
 
     addEnemy() {
         let enemy = new Obstacle(this, this.enemySpeed, 'ghost');
+        enemy.play("ghostWalk");
         this.obstacleGroup.add(enemy);
     }
 
     update() {
+        //Scrolls BG
+        this.magicworld.tilePositionX += 1;
         // Decrements HP
         this.hp.decrease(this.passiveHPLoss / this.ONE_SEC);
 
