@@ -4,14 +4,19 @@ class Load extends Phaser.Scene {
     }
 
     preload() {
-        // load graphics assets
+        // All title assets
+        this.load.image('title','./assets/startscreen.png');
+        this.load.image('instructions','./assets/introduction_3.png');
+        this.load.image('instructionBack','./assets/introductionTitleText.png');
+        this.load.image('instructionNext','./assets/introductionContinueText.png');
+        this.load.image('titleStart','./assets/clicktostartText.png');
+        this.load.image('titleCredits','./assets/creditText.png');
+
         //place back ground 
         this.load.image('magicworld', './assets/magicworld.png');
         this.load.image ('arrow','./assets/canon.png');
         this.load.image ('still','./assets/camper.png');
         this.load.image('blocker','./assets/bar.png');
-        this.load.image('title','./assets/startscreen.png');
-        this.load.image('instructions','./assets/introduction_3.png');
         // Test Assets
         this.load.spritesheet('button', './assets/button.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 1});
         this.load.spritesheet('miku', './assets/player.png', {frameWidth: 60, frameHeight: 75, startFrame: 0, endFrame: 11});       
