@@ -38,9 +38,9 @@ class Button extends Phaser.GameObjects.Sprite {
 
         // Toggles Button Images
         if (this.isClickable == true) {
-            this.setFrame(1);
-        } else {
             this.setFrame(0);
+        } else {
+            this.setFrame(1);
         }
     }
 

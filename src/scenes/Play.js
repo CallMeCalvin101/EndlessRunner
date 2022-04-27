@@ -3,22 +3,6 @@ class Play extends Phaser.Scene {
         super("playScene");
     }
 
-    preload() {
-        //place back ground 
-        this.load.image('magicworld', './assets/magicworld.png');
-        this.load.image ('arrow','./assets/canon.png');
-        this.load.image ('still','./assets/camper.png');
-        this.load.image('blocker','./assets/bar.png');
-        // Test Assets
-        this.load.spritesheet('button', './assets/button.png', {frameWidth: 48, frameHeight: 24, startFrame: 0, endFrame: 1});
-        this.load.spritesheet('miku', './assets/player.png', {frameWidth: 60, frameHeight: 75, startFrame: 0, endFrame: 11});       
-        this.load.spritesheet('bugsprite', './assets/bugsprite.png', {frameWidth: 64, frameHeight: 50, startFrame: 0, endFrame: 3});
-        this.load.spritesheet('hurtbug', './assets/hurtbug.png', {frameWidth: 64, frameHeight: 50, startFrame: 0, endFrame: 3});
-        this.load.spritesheet('ghost', './assets/ghost.png', {frameWidth: 60, frameHeight: 50, startFrame: 0, endFrame: 4});
-
-
-    }
-
     create() {
         // a vector to track player's position
         this.ptr = new Phaser.Math.Vector2();
@@ -122,13 +106,13 @@ class Play extends Phaser.Scene {
         },this)
         
         // Add a new hp bar deatures: Hp.increase(var) Hp.decrease(var);
-        this.hp= new Hp(this,game.config.width / 3, game.config.height/2+120);
+        this.hp= new Hp(this, 10, game.config.height/2+120);
 
         // Test Buttons
         this.testButtons = this.add.group();
-        for (let i = 0; i < 5; i++) {
-            for (let j = 0; j < 5; j++) {
-                let testButton = new Button(this, 90 + (60 * i), game.config.height * (2/3) + 40 + (30 * j), 'button', 0, this.hp).setOrigin(0, 0);
+        for (let i = 0; i < 4; i++) {
+            for (let j = 0; j < 3; j++) {
+                let testButton = new Button(this, 118 + (88 * i), game.config.height * (2/3) + 10 + (70 * j), 'button', 0, this.hp).setOrigin(0, 0);
                 this.testButtons.add(testButton);
             }
         }
@@ -150,24 +134,6 @@ class Play extends Phaser.Scene {
         this.time.delayedCall(2500 * 5, () => { 
             this.addEnemy(); 
         });
-
-        /*
-        this.obstacle01 = this.physics.add.sprite(400, 100, 'bugsprite');  //create obstacle sprite
-        this.obstacle01.body.collideWorldBounds = true; 
-        this.obstacle01.play("bugsprite"); //start wiggle animation
-
-        this.obstacle02 = this.physics.add.sprite(200, 200, 'bugsprite');  //create obstacle sprite
-        this.obstacle02.body.collideWorldBounds = true; 
-        this.obstacle02.play("bugsprite"); //start wiggle animation
-
-        this.obstacle03 = this.physics.add.sprite(60, 300, 'bugsprite');  //create obstacle sprite
-        this.obstacle03.body.collideWorldBounds = true; 
-        this.obstacle03.play("bugsprite"); //start wiggle animation
-
-        this.obstacleGroup.add(this.obstacle01);
-        this.obstacleGroup.add(this.obstacle02);
-        this.obstacleGroup.add(this.obstacle03);*/
-
     }
 
     addEnemy() {
