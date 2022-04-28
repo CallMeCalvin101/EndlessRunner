@@ -55,39 +55,40 @@ class Play extends Phaser.Scene {
         
         //create player animate
         this.anims.create({
+            key: 'right',            
+            frames: this.anims.generateFrameNumbers('miku', {start: 6, end: 8, first: 6}),
+            frameRate: 4,
+            repeat: -1
+        });
+        this.anims.create({
             key: 'left',            
             frames: this.anims.generateFrameNumbers('miku', {start: 0, end: 2, first: 0}),
             frameRate: 4,
-            repeat: 1
+            repeat: -1
         });
         this.anims.create({
             key: 'down',            
             frames: this.anims.generateFrameNumbers('miku', {start: 3, end: 5, first: 3}),
             frameRate: 4,
-            repeat: 1
-        });
-        this.anims.create({
-            key: 'right',            
-            frames: this.anims.generateFrameNumbers('miku', {start: 6, end: 8, first: 6}),
-            frameRate: 4,
-            repeat: 1
+            repeat: -1
         });
         this.anims.create({
             key: 'up',            
             frames: this.anims.generateFrameNumbers('miku', {start: 9, end: 11, first: 9}),
             frameRate: 4,
-            repeat: 1
+            repeat: -1
         });
 
         // player
         this.blocker= this.physics.add.image(game.config.width/2,2*game.config.height/3,'blocker');
         this.blocker.setImmovable(true);
         this.player = this.physics.add.sprite(100,100,'miku'); 
+        this.player.anims.play("right");
         this.player.setScale(0.75);
         this.player.setCollideWorldBounds(true);  
         this.physics.add.collider(this.player, this.blocker);
 
-        // move player to the clicked/tapped position
+        // move player to the clicked/tapped position AND PLAY DIRECTIONAL ANIMATION
         this.input.on('pointerdown', function (gamePointer)
         {
             //this.arrow.setPosition(gamePointer.x, gamePointer.y);
@@ -104,9 +105,7 @@ class Play extends Phaser.Scene {
                 if(this.player.y<this.ptr.y){this.player.play('down');}
                 else{this.player.play('up');}
             }
-
             this.physics.moveToObject(this.player, gamePointer, this.MAX_SPEED); } //player speed, can always change 
-
         },this)
         
         // Add a new hp bar deatures: Hp.increase(var) Hp.decrease(var);
@@ -147,6 +146,16 @@ class Play extends Phaser.Scene {
     }
 
     update() {
+        
+        //Make player have "right" animation if they are not currently moving 
+        //and the "right" animation is not already playing 
+        //(this happens when player finishes moving left,up, or down.)
+        var anim = this.player.anims.currentAnim.key;
+        if(anim == "right"){}
+        else{
+            if(this.player.body.velocity.x == 0){this.player.anims.play("right")}
+            }
+
         //Scrolls BG
         this.magicworld.tilePositionX += 1;
         // Decrements HP
