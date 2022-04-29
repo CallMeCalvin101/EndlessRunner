@@ -11,7 +11,7 @@ class Play extends Phaser.Scene {
         this.load.image('blocker','./assets/bar.png');
         // Test Assets
         this.load.spritesheet('button', './assets/button.png', {frameWidth: 48, frameHeight: 24, startFrame: 0, endFrame: 1});
-        this.load.spritesheet('miku', './assets/player.png', {frameWidth: 60, frameHeight: 75, startFrame: 0, endFrame: 2});       
+        this.load.spritesheet('miku', './assets/player.png', {frameWidth: 60, frameHeight: 75, startFrame: 0, endFrame: 11});       
         this.load.spritesheet('bugsprite', './assets/bugsprite.png', {frameWidth: 64, frameHeight: 50, startFrame: 0, endFrame: 3});
         this.load.spritesheet('hurtbug', './assets/hurtbug.png', {frameWidth: 64, frameHeight: 50, startFrame: 0, endFrame: 3});
 
@@ -63,6 +63,26 @@ class Play extends Phaser.Scene {
             frameRate: 4,
             repeat: -1
         });
+        this.anims.create({
+            key: 'a2',            
+            frames: this.anims.generateFrameNumbers('miku', {start: 3, end: 5, first: 3}),
+            frameRate: 4,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'a3',            
+            frames: this.anims.generateFrameNumbers('miku', {start: 6, end: 8, first: 6}),
+            frameRate: 4,
+            repeat: -1
+        });
+        this.anims.create({
+            key: 'a4',            
+            frames: this.anims.generateFrameNumbers('miku', {start: 9, end: 11, first: 9}),
+            frameRate: 4,
+            repeat: -1
+        });
+
+
 
         // player
         this.blocker= this.physics.add.image(game.config.width/2,2*game.config.height/3,'blocker');
@@ -78,7 +98,7 @@ class Play extends Phaser.Scene {
             if(gamePointer.y<=2*game.config.height/3){
             this.ptr.x=gamePointer.x;
             this.ptr.y=gamePointer.y;
-            this.player.play('a1');                 
+            this.player.play('a2');                 
 
             this.physics.moveToObject(this.player, gamePointer, this.MAX_SPEED); } //player speed, can always change 
 
@@ -173,5 +193,7 @@ class Play extends Phaser.Scene {
 
       
     }
-   
+    //AniPlay(pointer1, pointer2){
+    //    if 
+    //}
 }
