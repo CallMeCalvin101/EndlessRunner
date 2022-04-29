@@ -2,14 +2,14 @@ class Hp {
     constructor(scene, x, y) {
         //this.hbar = new Phaser.GameObjects.Graphics(scene);
         this.back = scene.add.image(x, y, 'healthbarEmpty').setOrigin(0.5, 1);
-        this.hbar = scene.add.image(x, y, 'healthbarFull').setOrigin(0.5, 1);
+        this.hbar = scene.add.image(x, y - 210, 'healthbarFull').setOrigin(0.5, 1);
         this.x = x;
         this.y = y;
         this.value = 100;
         this.pval = 1;
         this.draw();
         //this.healthbar=scene.add.existing(this.hbar);
-
+        this.hbar.setRotation(Math.PI);
     }  
  
     decrease (atkhp){
