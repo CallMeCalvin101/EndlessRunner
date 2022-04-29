@@ -17,6 +17,11 @@ class Load extends Phaser.Scene {
         this.load.image ('arrow','./assets/canon.png');
         this.load.image ('still','./assets/camper.png');
         this.load.image('blocker','./assets/bar.png');
+
+        // Static image assets
+        this.load.image('healthbarFull','./assets/healthbarFull.png')
+        this.load.image('healthbarEmpty','./assets/healthbarEmpty.png')
+
         // Test Assets
         this.load.spritesheet('button', './assets/button.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 1});
         this.load.spritesheet('miku', './assets/player.png', {frameWidth: 60, frameHeight: 75, startFrame: 0, endFrame: 11});       

@@ -105,7 +105,7 @@ class Play extends Phaser.Scene {
         },this)
         
         // Add a new hp bar deatures: Hp.increase(var) Hp.decrease(var);
-        this.hp= new Hp(this, 10, game.config.height/2+120);
+        this.hp= new Hp(this, 59, game.config.height - 2);
 
         // Test Buttons
         this.testButtons = this.add.group();
