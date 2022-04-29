@@ -9,7 +9,6 @@ class Hp {
         this.pval = 1;
         this.draw();
         //this.healthbar=scene.add.existing(this.hbar);
-        this.hbar.setScale(1, 1)
 
     }  
  

@@ -21,6 +21,7 @@ class Load extends Phaser.Scene {
         // Static image assets
         this.load.image('healthbarFull','./assets/healthbarFull.png')
         this.load.image('healthbarEmpty','./assets/healthbarEmpty.png')
+        this.load.image('botUI','./assets/underUI.png')
 
         // Test Assets
         this.load.spritesheet('button', './assets/button.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 1});

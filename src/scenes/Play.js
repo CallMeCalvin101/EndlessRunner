@@ -36,18 +36,14 @@ class Play extends Phaser.Scene {
             repeat: -1
         });
 
-            
-        // Test UI
-        this.add.rectangle(0, 2 * game.config.height / 3, game.config.width, game.config.height / 3, 0xFF7254).setOrigin(0, 0);
-
         //place back ground 
         this.magicworld = this.add.tileSprite(0, 0, 480, game.config.height * (2/3), 'magicworld').setOrigin(0);
+
+        // UI
+        this.add.image(0, game.config.height * (2/3), 'botUI').setOrigin(0);
+
         // Variable for cursor
         gamePointer = this.input.activePointer;
-        
-        // Test UI
-        this.add.rectangle(0, 2 * game.config.height / 3, game.config.width, game.config.height / 3, 0xFF7254).setOrigin(0, 0);
-
         
         //create player animate
         this.anims.create({
@@ -107,7 +103,7 @@ class Play extends Phaser.Scene {
         // Add a new hp bar deatures: Hp.increase(var) Hp.decrease(var);
         this.hp= new Hp(this, 59, game.config.height - 2);
 
-        // Test Buttons
+        // Buttons
         this.testButtons = this.add.group();
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 3; j++) {
