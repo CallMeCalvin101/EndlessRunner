@@ -8,7 +8,6 @@ class Instructions extends Phaser.Scene {
         this.background = this.add.image(0, 0, 'instructions').setOrigin(0);
         this.nextButton = this.add.sprite(game.config.width/2, 440, 'instructionNext').setOrigin(0.5);
         this.backButton = this.add.sprite(game.config.width/2, 540, 'instructionBack').setOrigin(0.5);
-        //this.background.setScale(0.5);
 
         this.nextButton.setInteractive();
         this.backButton.setInteractive();
