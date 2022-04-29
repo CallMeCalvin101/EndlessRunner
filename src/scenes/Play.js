@@ -13,7 +13,7 @@ class Play extends Phaser.Scene {
         this.passiveHPLoss = 3;
         this.ONE_SEC = 60;
         this.emenyHPLoss = 30;
-        this.enemySpeed = -2.5;
+        enemySpeed = -2.5;
 
         //CREATE bug/obstacle/ghost ANIMATIONS
         this.anims.create({
@@ -36,10 +36,6 @@ class Play extends Phaser.Scene {
             repeat: -1
         });
 
-
-        this.time.delayedCall(2500, () => { 
-            console.log("time"); 
-        });
             
         // Test UI
         this.add.rectangle(0, 2 * game.config.height / 3, game.config.width, game.config.height / 3, 0xFF7254).setOrigin(0, 0);
@@ -130,7 +126,7 @@ class Play extends Phaser.Scene {
             this.addEnemy(); 
         });
 
-        this.time.delayedCall(2750, () => { 
+        this.time.delayedCall(2500, () => { 
             this.addEnemy(); 
         });
 
@@ -140,7 +136,7 @@ class Play extends Phaser.Scene {
     }
 
     addEnemy() {
-        let enemy = new Obstacle(this, this.enemySpeed, 'ghost');
+        let enemy = new Obstacle(this, enemySpeed, 'ghost');
         enemy.play("ghostWalk");
         this.obstacleGroup.add(enemy);
     }
@@ -178,14 +174,14 @@ class Play extends Phaser.Scene {
 
 
         for (let enemy of this.obstacleGroup.getChildren()){
-            if(enemy.body.blocked.left)       
+            /*if(enemy.body.blocked.left)       
             //if obstacle hits left side of screen, reset it, play standard animation (instead of being broken animation if player has collided with obstacle)
             {
                 // console.log("blocked on left") //for debugging
             enemy.x = 1000;
             enemy.body.collideWorldBounds = true; 
             enemy.play("bugsprite");
-            }
+            }*/
 
             enemy.x -= 2.5;     //obstacles are constantly moving
         }
@@ -194,11 +190,11 @@ class Play extends Phaser.Scene {
         //polling to see if player has collided with any obstacle in obstacleGroup. If so , run obstacleHit Function
         function obstacleHit (player, obstacle) //function that runs when player hits obstacle during polling
         {
-            if(!(obstacle.anims.getName() == "hurtbug")){  
+            if(obstacle.isHit == false){  
                 //if statement added since obstacleHit is called in all the different frames where player and obstacle are overlapping
                 //if statement allows code below to only happen once (the first time collision happens between player and member of obstacleGroup)
                 console.log("collide"); //debugging console log
-                obstacle.play("hurtbug"); // obstacle animation plays that shows it got hit by player (breaks/gets damaged)
+                obstacle.isHit = true; // obstacle animation plays that shows it got hit by player (breaks/gets damaged)
                 this.hp.decrease(this.emenyHPLoss);         //Decrements HP
                 //insert code to play animation for character to make it appear hurt (can also just be changing the tint of the sprite.)
                 //decrease hp
