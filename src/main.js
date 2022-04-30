@@ -14,10 +14,13 @@ let config = {
             }
         }
     },
-    scene: [Menu, Play]
+    scene: [Load, Menu, Instructions, Play]
 }
+
+let game = new Phaser.Game(config);
 
 let cursors;
 let gamePointer;
-
-let game = new Phaser.Game(config);
+let enemySpeed;
+let score;
+let centerX = game.config.width/2;
