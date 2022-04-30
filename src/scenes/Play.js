@@ -16,6 +16,16 @@ class Play extends Phaser.Scene {
         enemySpeed = -2.5;
         score = 0;
 
+        this.bg_music = this.sound.add('bg_music', {
+            mute: false,
+            volume: 0.5,
+            rate: 1.2,
+            loop: true 
+        });
+
+        this.bg_music.play();
+
+
         //CREATE bug/obstacle/ghost ANIMATIONS
         this.anims.create({
             key: 'bugsprite',            
@@ -109,11 +119,14 @@ class Play extends Phaser.Scene {
             this.ptr.y=gamePointer.y;
             let xdifference = (Math.abs((Math.abs(this.player.x)) - (Math.abs(this.ptr.x))));
             let ydifference = (Math.abs((Math.abs(this.player.y)) - (Math.abs(this.ptr.y))));
-            if(xdifference > ydifference){  //if player is moving more horizontal than vertical
+            if(xdifference > ydifference){  
+                this.sound.play('walk3');
+                //if player is moving more horizontal than vertical
                 if(this.player.x<this.ptr.x){this.player.play('right');}
                 else{this.player.play('left');}
             }
             if(ydifference > xdifference){  //if player is moving more vertical than horizontal
+                this.sound.play('walk3');
                 if(this.player.y<this.ptr.y){this.player.play('down');}
                 else{this.player.play('up');}
             }
@@ -227,13 +240,8 @@ class Play extends Phaser.Scene {
                 //insert code to play animation for character to make it appear hurt (can also just be changing the tint of the sprite.)
                 //decrease hp
                 this.hp.decrease(5);
+                this.sound.play('ghost_die', { volume: 0.3 });
             }
         }
-
-
-      
     }
-    //AniPlay(pointer1, pointer2){
-    //    if 
-    //}
 }

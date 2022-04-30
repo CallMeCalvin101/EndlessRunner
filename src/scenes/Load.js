@@ -4,6 +4,11 @@ class Load extends Phaser.Scene {
     }
 
     preload() {
+
+        this.load.audio('walk3', './assets/walk3.wav');
+        this.load.audio('heart', './assets/heart.wav');
+        this.load.audio('ghost_die', './assets/ghost_die.wav');
+        this.load.audio('bg_music', './assets/bg_music.wav');
         // All title assets
         this.load.image('title','./assets/startscreen.png');
         this.load.image('instructions','./assets/introduction_3.png');
