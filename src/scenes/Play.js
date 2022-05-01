@@ -88,16 +88,16 @@ class Play extends Phaser.Scene {
         this.blocker.setImmovable(true);
         this.player = this.physics.add.sprite(100,100,'miku'); 
         this.player.anims.play("right");
-        this.player.setScale(0.75);
+        this.player.setScale(0.50);
         this.player.setCollideWorldBounds(true);  
         this.physics.add.collider(this.player, this.blocker);
 
 
         // Score
         let scoreConfig = {
-            fontFamily: 'Courier',
+            fontFamily: 'fantasy',
             fontSize: '28px',
-            //backgroundColor: '#F3B141',
+            //backgroundColor: '#0000',
             color: '#ffffff',
             align: 'left',
             padding: {
