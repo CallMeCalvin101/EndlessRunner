@@ -104,10 +104,9 @@ class Play extends Phaser.Scene {
                 top: 5,
                 bottom: 5,
             },
-            fixedWidth: 100
         }
 
-        this.scoreText = this.add.text(20, 20, score, scoreConfig);
+        this.scoreText = this.add.text(20, 20, "0:00", scoreConfig);
 
 
         // move player to the clicked/tapped position AND PLAY DIRECTIONAL ANIMATION
@@ -179,8 +178,12 @@ class Play extends Phaser.Scene {
     }
 
     addScore() {
-        score += 100;
-        this.scoreText.text = score;
+        score += 1;
+        if (score < 10) {
+            this.scoreText.setText("0:0" + score);
+        } else {
+            this.scoreText.setText(Math.floor(score / 60) + ":" + score % 60);
+        }
     }
 
     update() {
