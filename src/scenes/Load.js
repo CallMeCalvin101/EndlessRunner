@@ -17,6 +17,11 @@ class Load extends Phaser.Scene {
         this.load.image('titleStart','./assets/clicktostartText.png');
         this.load.image('titleCredits','./assets/creditText.png');
 
+        //player death scene
+        this.load.image('restart','./assets/restart.png');
+        this.load.image('dipped','./assets/dipped.png');
+        this.load.image('deathscene','./assets/deathscene.png');
+
         //place back ground 
         this.load.image('magicworld', './assets/magicworld.png');
         this.load.image ('arrow','./assets/canon.png');

@@ -185,6 +185,7 @@ class Play extends Phaser.Scene {
 
     update() {
         
+        
         //Make player have "right" animation if they are not currently moving 
         //and the "right" animation is not already playing 
         //(this happens when player finishes moving left,up, or down.)
@@ -243,5 +244,11 @@ class Play extends Phaser.Scene {
                 this.sound.play('ghost_die', { volume: 0.3 });
             }
         }
+        //if player die
+        if(this.hp.getHP() <= 0){
+            this.scene.start('deathScene');
+            this.bg_music.pause();
+        }
+
     }
 }
