@@ -46,6 +46,7 @@ class Play extends Phaser.Scene {
             yoyo: true,
             repeat: -1
         });
+       
 
         //place back ground 
         this.magicworld = this.add.tileSprite(0, 0, 480, game.config.height * (2/3), 'magicworld').setOrigin(0);
@@ -76,7 +77,7 @@ class Play extends Phaser.Scene {
         });
         this.anims.create({
 
-            key: 'up',            
+            key: 'up',          
 
             frames: this.anims.generateFrameNumbers('miku', {start: 9, end: 11, first: 9}),
             frameRate: 4,
