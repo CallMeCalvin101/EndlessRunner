@@ -32,8 +32,8 @@ class Button extends Phaser.GameObjects.Sprite {
                 this.playclick = true;  
                 this.play('b');
                 this.playclick = false; 
-                this.playclick = false;     
-                //this.isClickable = false;            
+                //this.playclick = false;     
+                this.isClickable = false;            
                 
                 this.refreshTime = (Math.floor(Math.random() * 10) + 5) * 100;
                 
