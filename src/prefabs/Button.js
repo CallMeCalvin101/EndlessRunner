@@ -16,7 +16,7 @@ class Button extends Phaser.GameObjects.Sprite {
         this.anims.create({
             key: 'b',            
             frames: this.anims.generateFrameNumbers(texture, {start: 0, end: 4, first: 0}),
-            frameRate: 5,
+            frameRate: 40,
             //yoyo: true,
             repeat: 0,
         });
@@ -27,12 +27,9 @@ class Button extends Phaser.GameObjects.Sprite {
         this.setInteractive();
         
         this.on('pointerdown', () => {
+            this.play('b');
             if (this.isClickable == true) {   
-                //this.play('b');      
-                this.playclick = true;  
-                this.play('b');
-                this.playclick = false; 
-                //this.playclick = false;     
+                   
                 this.isClickable = false;            
                 
                 this.refreshTime = (Math.floor(Math.random() * 10) + 5) * 100;
@@ -55,7 +52,7 @@ class Button extends Phaser.GameObjects.Sprite {
         }
 
         // Toggles Button Images
-        if(this.playclick==false){
+       // if(this.playclick==false){
             
         if (this.isClickable == true) {
             //this.play('b');  
@@ -64,7 +61,7 @@ class Button extends Phaser.GameObjects.Sprite {
                         
            this.setFrame(4);
         }
-        }else{this.play('b');}
+        //}else{this.play('b');}
 
         
     }
