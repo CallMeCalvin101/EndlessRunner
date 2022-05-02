@@ -10,6 +10,7 @@ class Button extends Phaser.GameObjects.Sprite {
         
         // Variables to track button behavior
         this.isClickable = false;
+        this.playclick = false;
         this.refreshTime = (Math.floor(Math.random() * 10) + 5) * 100;
         this.gain = 10;
         this.anims.create({
@@ -17,9 +18,9 @@ class Button extends Phaser.GameObjects.Sprite {
             frames: this.anims.generateFrameNumbers(texture, {start: 0, end: 4, first: 0}),
             frameRate: 5,
             //yoyo: true,
-            repeat: -1,
+            repeat: 0,
         });
-        this.play('b');  
+        //this.play('b');  
         
         // If tap/click is in button and button is on, set button to off resets timer to a random time
         // Also increases the hp
@@ -27,8 +28,12 @@ class Button extends Phaser.GameObjects.Sprite {
         
         this.on('pointerdown', () => {
             if (this.isClickable == true) {   
-                //this.play('b');             
-                this.isClickable = false;            
+                //this.play('b');      
+                this.playclick = true;  
+                this.play('b');
+                this.playclick = false; 
+                this.playclick = false;     
+                //this.isClickable = false;            
                 
                 this.refreshTime = (Math.floor(Math.random() * 10) + 5) * 100;
                 
@@ -50,11 +55,16 @@ class Button extends Phaser.GameObjects.Sprite {
         }
 
         // Toggles Button Images
+        if(this.playclick==false){
+            
         if (this.isClickable == true) {
+            //this.play('b');  
             this.setFrame(0);
-        } else {            
-            this.setFrame(4);
+        } else {
+                        
+           this.setFrame(4);
         }
+        }else{this.play('b');}
 
         
     }
@@ -62,6 +72,7 @@ class Button extends Phaser.GameObjects.Sprite {
 
     reset() {
         this.isClickable = false;
+        this.playclick = false;
         this.refreshTime = 60;
     }
 }
