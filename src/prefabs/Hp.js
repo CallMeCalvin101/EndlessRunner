@@ -10,6 +10,7 @@ class Hp {
         this.draw();
         //this.healthbar=scene.add.existing(this.hbar);
         this.hbar.setRotation(Math.PI);
+        this.playsound = false;
     }  
  
     decrease (atkhp){
@@ -26,6 +27,7 @@ class Hp {
             this.value = 100;
         }
         this.draw();
+        this.playsound = true;
     }
 
     // Get Function that returns the current hp

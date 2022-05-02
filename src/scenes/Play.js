@@ -18,7 +18,7 @@ class Play extends Phaser.Scene {
 
         this.bg_music = this.sound.add('bg_music', {
             mute: false,
-            volume: 0.5,
+            volume: 0.4,
             rate: 1.2,
             loop: true 
         });
@@ -187,8 +187,17 @@ class Play extends Phaser.Scene {
     }
 
     update() {
-        
-        
+        //play heart noise if hp increases
+        if(this.hp.playsound){
+            this.sound.play('heart');
+            this.hp.playsound = false;
+        }
+        //play heart spawn noise if it spawns
+        for (let i of this.testButtons.getChildren()){
+            if(i.refreshTime == 1){ //use 1 and not 0 since the timer stays at 0 once it runs out - causes sound to play a ton of times super loud 
+                this.sound.play('heartspawn', { volume: 0.2});
+            }
+        }
         //Make player have "right" animation if they are not currently moving 
         //and the "right" animation is not already playing 
         //(this happens when player finishes moving left,up, or down.)

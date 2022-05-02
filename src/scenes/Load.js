@@ -7,6 +7,7 @@ class Load extends Phaser.Scene {
 
         this.load.audio('walk3', './assets/walk3.wav');
         this.load.audio('heart', './assets/heart.wav');
+        this.load.audio('heartspawn', './assets/heartspawn.wav');
         this.load.audio('ghost_die', './assets/ghost_die.wav');
         this.load.audio('bg_music', './assets/bg_music.wav');
         // All title assets
