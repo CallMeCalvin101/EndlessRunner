@@ -20,6 +20,7 @@ class Button extends Phaser.GameObjects.Sprite {
             //yoyo: true,
             repeat: 0,
         });
+        this.setFrame(4);
         //this.play('b');  
         
         // If tap/click is in button and button is on, set button to off resets timer to a random time
@@ -27,13 +28,10 @@ class Button extends Phaser.GameObjects.Sprite {
         this.setInteractive();
         
         this.on('pointerdown', () => {
-            this.play('b');
             if (this.isClickable == true) {   
-                   
+                this.play('b');
                 this.isClickable = false;            
-                
                 this.refreshTime = (Math.floor(Math.random() * 10) + 5) * 100;
-                
                 hp.increase(this.gain);
             }
         });
@@ -57,10 +55,9 @@ class Button extends Phaser.GameObjects.Sprite {
         if (this.isClickable == true) {
             //this.play('b');  
             this.setFrame(0);
-        } else {
-                        
-           this.setFrame(4);
-        }
+        } /*else {
+            this.setFrame(4);
+        }  */
         //}else{this.play('b');}
 
         
