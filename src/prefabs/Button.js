@@ -16,7 +16,7 @@ class Button extends Phaser.GameObjects.Sprite {
         this.anims.create({
             key: 'b',            
             frames: this.anims.generateFrameNumbers(texture, {start: 0, end: 4, first: 0}),
-            frameRate: 40,
+            frameRate: 10,
             //yoyo: true,
             repeat: 0,
         });
