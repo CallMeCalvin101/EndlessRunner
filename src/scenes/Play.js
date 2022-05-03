@@ -46,6 +46,14 @@ class Play extends Phaser.Scene {
             yoyo: true,
             repeat: -1
         });
+
+        this.anims.create({
+            key: 'ghostAccelerate',            
+            frames: this.anims.generateFrameNumbers('fastGhost', {start: 0, end: 4, first: 0}),
+            frameRate: 4,
+            yoyo: true,
+            repeat: -1
+        });
        
 
         //place back ground 
@@ -182,8 +190,8 @@ class Play extends Phaser.Scene {
     }
     
     addAcceleratingEnemy() {
-        let enemy = new AcceleratingObstacle(this, enemySpeed, 'ghost');
-        enemy.play("ghostWalk");
+        let enemy = new AcceleratingObstacle(this, enemySpeed, 'fastGhost');
+        enemy.play("ghostAccelerate");
         this.obstacleGroup.add(enemy);
     }
 
@@ -331,8 +339,8 @@ class Play extends Phaser.Scene {
         if(this.hp.getHP() <= 0 && this.gameOver == false){
             this.gameOver = true;
             this.player.setVelocityY(0);
-            this.player.setVelocityY(1);
-            this.time.delayedCall(5000, () => {
+            this.player.setVelocityX(1);
+            this.time.delayedCall(3000, () => {
                 this.scene.start('deathScene');
             });
             this.bg_music.pause();

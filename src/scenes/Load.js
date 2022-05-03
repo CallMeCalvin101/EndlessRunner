@@ -42,6 +42,7 @@ class Load extends Phaser.Scene {
         this.load.spritesheet('miku', './assets/player.png', {frameWidth: 60, frameHeight: 75, startFrame: 0, endFrame: 11});       
         this.load.spritesheet('ghost', './assets/ghost.png', {frameWidth: 49, frameHeight: 40, startFrame: 0, endFrame: 4});
         this.load.spritesheet('bounceGhost', './assets/ghost1.png', {frameWidth: 50, frameHeight: 40, startFrame: 0, endFrame: 4});
+        this.load.spritesheet('fastGhost', './assets/ghost2.png', {frameWidth: 50, frameHeight: 40, startFrame: 0, endFrame: 4});
         this.load.image('pointer', './assets/pointer.png');
     }
 
