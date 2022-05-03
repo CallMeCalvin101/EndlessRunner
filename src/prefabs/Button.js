@@ -17,11 +17,9 @@ class Button extends Phaser.GameObjects.Sprite {
             key: 'b',            
             frames: this.anims.generateFrameNumbers(texture, {start: 0, end: 4, first: 0}),
             frameRate: 10,
-            //yoyo: true,
             repeat: 0,
         });
         this.setFrame(4);
-        //this.play('b');  
         
         // If tap/click is in button and button is on, set button to off resets timer to a random time
         // Also increases the hp
@@ -49,20 +47,11 @@ class Button extends Phaser.GameObjects.Sprite {
             this.isClickable = true;
         }
 
-        // Toggles Button Images
-       // if(this.playclick==false){
-            
+        // Toggles Button Images            
         if (this.isClickable == true) {
-            //this.play('b');  
             this.setFrame(0);
-        } /*else {
-            this.setFrame(4);
-        }  */
-        //}else{this.play('b');}
-
-        
+        }
     }
-
 
     reset() {
         this.isClickable = false;

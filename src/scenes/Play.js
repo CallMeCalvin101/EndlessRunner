@@ -10,13 +10,20 @@ class Play extends Phaser.Scene {
         this.ACCELERATION = 2000;
         this.MAX_SPEED = 150; 
         this.DRAG = 4000;   
+
+        // Variables for health bar
         this.passiveHPLoss = 3;
         this.ONE_SEC = 60;
-        this.emenyHPLoss = 30;
+        this.enemyHPLoss = 30;
+
+        //Variables for enemy speed
         enemySpeed = -2.5;
         this.maxEnemySpeed = -200;
+
+        // Variable for game progression
         score = 0;
-        this.oncepersec = true;
+
+        // Variables for game ending
         this.gameOver = false;
         this.playerAlpha = 1;
 
@@ -65,6 +72,7 @@ class Play extends Phaser.Scene {
         // Variable for cursor
         gamePointer = this.input.activePointer;        
         
+        // Player Animations
         this.anims.create({
             key: 'right',            
             frames: this.anims.generateFrameNumbers('miku', {start: 6, end: 8, first: 6}),
@@ -90,12 +98,14 @@ class Play extends Phaser.Scene {
             repeat: -1
         });
 
-        // player
+        // Blocker
         this.blocker= this.physics.add.image(game.config.width/2,2*game.config.height/3,'blocker');
         this.blocker.setImmovable(true);
 
+        // On Click Pointer
         this.point = this.physics.add.sprite(-100, 0, 'pointer').setOrigin(0.5);
 
+        // Player
         this.player = this.physics.add.sprite(100,100,'miku'); 
         this.player.anims.play("right");
         this.player.setScale(0.50);
@@ -164,7 +174,7 @@ class Play extends Phaser.Scene {
         this.testButtons.runChildUpdate = true;
 
         this.obstacleGroup = this.add.group({
-            runChildUpdate: true    // make sure update runs on group children
+            runChildUpdate: true            // make sure update runs on group children
         })
 
 
@@ -177,6 +187,7 @@ class Play extends Phaser.Scene {
         });
     }
 
+    // Enemy Spawn Functions
     addEnemy() {
         let enemy = new Obstacle(this, enemySpeed, 'ghost');
         enemy.play("ghostWalk");
@@ -229,6 +240,7 @@ class Play extends Phaser.Scene {
         }
     }
 
+    // Iterates Game difficulty
     addScore() {
         score += 1;
         if (score % 60 < 10) {
@@ -265,6 +277,7 @@ class Play extends Phaser.Scene {
         }
     }
 
+    // Polls Game State
     update() {
         //play heart noise if hp increases
         if(this.hp.playsound){
@@ -298,7 +311,6 @@ class Play extends Phaser.Scene {
 
         if (this.player.body.speed > 0)
         {
-        
             if (distance < 4)
             {
             this.player.body.reset(this.ptr.x, this.ptr.y);
@@ -306,17 +318,7 @@ class Play extends Phaser.Scene {
         }
         // end of borrowing code
 
-
         for (let enemy of this.obstacleGroup.getChildren()){
-            /*if(enemy.body.blocked.left)       
-            //if obstacle hits left side of screen, reset it, play standard animation (instead of being broken animation if player has collided with obstacle)
-            {
-                // console.log("blocked on left") //for debugging
-            enemy.x = 1000;
-            enemy.body.collideWorldBounds = true; 
-            enemy.play("bugsprite");
-            }*/
-
             enemy.x -= 2.5;     //obstacles are constantly moving
         }
 
@@ -325,13 +327,8 @@ class Play extends Phaser.Scene {
         function obstacleHit (player, obstacle) //function that runs when player hits obstacle during polling
         {
             if(obstacle.isHit == false){  
-                //if statement added since obstacleHit is called in all the different frames where player and obstacle are overlapping
-                //if statement allows code below to only happen once (the first time collision happens between player and member of obstacleGroup)
                 obstacle.isHit = true; // obstacle animation plays that shows it got hit by player (breaks/gets damaged)
-                this.hp.decrease(this.emenyHPLoss);         //Decrements HP
-                //insert code to play animation for character to make it appear hurt (can also just be changing the tint of the sprite.)
-                //decrease hp
-                this.hp.decrease(5);
+                this.hp.decrease(this.enemyHPLoss);         //Decrements HP
                 this.sound.play('ghost_die', { volume: 0.3 });
             }
         }
