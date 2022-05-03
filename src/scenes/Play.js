@@ -168,10 +168,42 @@ class Play extends Phaser.Scene {
         this.obstacleGroup.add(enemy);
     }
 
+    addNewEnemyWave() {
+        for (let enemy of this.obstacleGroup.getChildren()){
+            enemy.newObstacle = false;
+        }
+        this.time.delayedCall(2000, () => {
+            this.waveType = (Math.floor(Math.random() * 4));
+            this.waveType = 0;
+            //this.waveType = 3;
+            if (this.waveType == 1) {
+                for (let i = 0; i < 4; i++){
+                    this.addAcceleratingEnemy();
+                }
+            } else if (this.waveType == 2) {
+                for (let i = 0; i < 3; i++){
+                    this.addBouncingEnemy();
+                }
+            } else if (this.waveType == 3) {
+                this.addEnemy();
+                this.addEnemy();
+                this.addAcceleratingEnemy();
+                this.addBouncingEnemy();
+            } else {
+                this.addEnemy();
+                this.addEnemy();
+                this.time.delayedCall(750, () => {
+                    this.addEnemy();
+                    this.addEnemy();
+                });
+            }
+        });
+    }
+
     addScore() {
         score += 1;
         if (score % 60 < 10) {
-            this.scoreText.setText("0:0" + score % 60);
+            this.scoreText.setText(Math.floor(score / 60) + ":0" + score % 60);
         } else {
             this.scoreText.setText(Math.floor(score / 60) + ":" + score % 60);
         }
@@ -182,11 +214,15 @@ class Play extends Phaser.Scene {
                 this.addBouncingEnemy();
                 this.addEnemy();
             } else if (score == 10) {
-                this.addEnemy();
+                this.addNewEnemyWave();
             }
 
             if (score % 10 == 0 && enemySpeed > this.maxEnemySpeed) {
                 enemySpeed -= 10;
+            }
+
+            if (score % 30 == 0) {
+                this.addNewEnemyWave();
             }
         }
     }
