@@ -15,6 +15,7 @@ class Play extends Phaser.Scene {
         this.emenyHPLoss = 30;
         enemySpeed = -2.5;
         score = 0;
+        this.oncepersec = true;
 
         this.bg_music = this.sound.add('bg_music', {
             mute: false,
@@ -24,21 +25,9 @@ class Play extends Phaser.Scene {
         });
 
         this.bg_music.play();
+        
 
-
-        //CREATE bug/obstacle/ghost ANIMATIONS
-        this.anims.create({
-            key: 'bugsprite',            
-            frames: this.anims.generateFrameNumbers('bugsprite', {start: 0, end: 1, first: 0}),
-            frameRate: 8,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'hurtbug',            
-            frames: this.anims.generateFrameNumbers('hurtbug', {start: 0, end: 1, first: 0}),
-            frameRate: 50,
-            repeat: 0
-        });
+        //CREATE ghost/obstacle ANIMATIONS
         this.anims.create({
             key: 'ghostWalk',            
             frames: this.anims.generateFrameNumbers('ghost', {start: 0, end: 4, first: 0}),
@@ -76,9 +65,7 @@ class Play extends Phaser.Scene {
             repeat: -1
         });
         this.anims.create({
-
             key: 'up',          
-
             frames: this.anims.generateFrameNumbers('miku', {start: 9, end: 11, first: 9}),
             frameRate: 4,
             repeat: -1
@@ -107,7 +94,8 @@ class Play extends Phaser.Scene {
             },
         }
 
-        this.scoreText = this.add.text(20, 20, "0:00", scoreConfig);
+        this.add.image(16, 16, 'scoreback').setOrigin(0,0).setScale(1.1);
+        this.scoreText = this.add.text(26, 20, "0:00", scoreConfig);
 
 
         // move player to the clicked/tapped position AND PLAY DIRECTIONAL ANIMATION
@@ -152,7 +140,7 @@ class Play extends Phaser.Scene {
         })
 
         this.time.delayedCall(2500, () => { 
-            this.addEnemy(); 
+            this.addEnemy();   
         });
 
         this.time.delayedCall(2500, () => { 
@@ -184,6 +172,10 @@ class Play extends Phaser.Scene {
             this.scoreText.setText("0:0" + score);
         } else {
             this.scoreText.setText(Math.floor(score / 60) + ":" + score % 60);
+        }
+        if(score%5 == 0 && score>15){
+            console.log("decrease");
+            enemySpeed-=2;
         }
     }
 

@@ -10,6 +10,7 @@ class Load extends Phaser.Scene {
         this.load.audio('heartspawn', './assets/heartspawn.wav');
         this.load.audio('ghost_die', './assets/ghost_die.wav');
         this.load.audio('bg_music', './assets/bg_music.wav');
+        this.load.audio('deathmusic2', './assets/deathmusic2.wav');
         // All title assets
         this.load.image('title','./assets/startscreen.png');
         this.load.image('instructions','./assets/introduction_3.png');
@@ -17,6 +18,9 @@ class Load extends Phaser.Scene {
         this.load.image('instructionNext','./assets/introductionContinueText.png');
         this.load.image('titleStart','./assets/clicktostartText.png');
         this.load.image('titleCredits','./assets/creditText.png');
+        this.load.image('yourscore','./assets/yourscore.png');
+        this.load.image('scoreback','./assets/scoreback.png');
+
 
         //player death scene
         this.load.image('restart','./assets/restart.png');
@@ -25,8 +29,6 @@ class Load extends Phaser.Scene {
 
         //place back ground 
         this.load.image('magicworld', './assets/magicworld.png');
-        this.load.image ('arrow','./assets/canon.png');
-        this.load.image ('still','./assets/camper.png');
         this.load.image('blocker','./assets/bar.png');
 
         // Static image assets
@@ -37,8 +39,6 @@ class Load extends Phaser.Scene {
         // Test Assets
         this.load.spritesheet('button', './assets/b2.png', {frameWidth: 64, frameHeight: 64, startFrame: 0, endFrame: 4});
         this.load.spritesheet('miku', './assets/player.png', {frameWidth: 60, frameHeight: 75, startFrame: 0, endFrame: 11});       
-        this.load.spritesheet('bugsprite', './assets/bugsprite.png', {frameWidth: 64, frameHeight: 50, startFrame: 0, endFrame: 3});
-        this.load.spritesheet('hurtbug', './assets/hurtbug.png', {frameWidth: 64, frameHeight: 50, startFrame: 0, endFrame: 3});
         this.load.spritesheet('ghost', './assets/ghost.png', {frameWidth: 49, frameHeight: 40, startFrame: 0, endFrame: 4});
     }
 
