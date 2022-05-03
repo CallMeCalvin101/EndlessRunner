@@ -268,7 +268,7 @@ class Play extends Phaser.Scene {
             }
 
             if (score % 10 == 0 && enemySpeed > this.maxEnemySpeed && score >= 20) {
-                enemySpeed -= 10;
+                enemySpeed -= 5;
             }
 
             if (score % 30 == 0) {
