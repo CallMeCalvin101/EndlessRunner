@@ -191,7 +191,6 @@ class Play extends Phaser.Scene {
         this.clearEnemies();
         this.time.delayedCall(2000, () => {
             this.waveType = (Math.floor(Math.random() * 4));
-            this.waveType = 3;
             if (this.waveType == 1) {
                 for (let i = 0; i < 4; i++){
                     this.addAcceleratingEnemy();
