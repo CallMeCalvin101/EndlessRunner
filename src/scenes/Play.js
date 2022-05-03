@@ -169,13 +169,9 @@ class Play extends Phaser.Scene {
     }
 
     addNewEnemyWave() {
-        for (let enemy of this.obstacleGroup.getChildren()){
-            enemy.newObstacle = false;
-        }
+        this.clearEnemies();
         this.time.delayedCall(2000, () => {
             this.waveType = (Math.floor(Math.random() * 4));
-            this.waveType = 0;
-            //this.waveType = 3;
             if (this.waveType == 1) {
                 for (let i = 0; i < 4; i++){
                     this.addAcceleratingEnemy();
@@ -200,6 +196,12 @@ class Play extends Phaser.Scene {
         });
     }
 
+    clearEnemies() {
+        for (let enemy of this.obstacleGroup.getChildren()){
+            enemy.newObstacle = false;
+        }
+    }
+
     addScore() {
         score += 1;
         if (score % 60 < 10) {
@@ -210,11 +212,20 @@ class Play extends Phaser.Scene {
 
         if (score > 1) {
             if (score == 2) {
-                this.addAcceleratingEnemy();
-                this.addBouncingEnemy();
                 this.addEnemy();
-            } else if (score == 10) {
-                this.addNewEnemyWave();
+            } else if (score == 7) {
+                this.clearEnemies();
+                this.time.delayedCall(1500, () => {
+                    this.addEnemy();
+                    this.addEnemy();
+                });
+            } else if (score == 15) {
+                this.clearEnemies();
+                this.time.delayedCall(1500, () => {
+                    this.addEnemy();
+                    this.addEnemy();
+                    this.addEnemy();
+                });
             }
 
             if (score % 10 == 0 && enemySpeed > this.maxEnemySpeed) {
