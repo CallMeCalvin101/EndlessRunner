@@ -7,19 +7,30 @@ class Button extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, texture, frame, hp) {
         super(scene, x, y, texture, frame);
         scene.add.existing(this);
-
+        
         // Variables to track button behavior
         this.isClickable = false;
+        this.playclick = false;
         this.refreshTime = (Math.floor(Math.random() * 10) + 5) * 100;
         this.gain = 10;
-
+        this.anims.create({
+            key: 'b',            
+            frames: this.anims.generateFrameNumbers(texture, {start: 0, end: 4, first: 0}),
+            frameRate: 40,
+            //yoyo: true,
+            repeat: 0,
+        });
+        this.setFrame(4);
+        //this.play('b');  
+        
         // If tap/click is in button and button is on, set button to off resets timer to a random time
         // Also increases the hp
         this.setInteractive();
         
         this.on('pointerdown', () => {
-            if (this.isClickable == true) {
-                this.isClickable = false;
+            if (this.isClickable == true) {   
+                this.play('b');
+                this.isClickable = false;            
                 this.refreshTime = (Math.floor(Math.random() * 10) + 5) * 100;
                 hp.increase(this.gain);
             }
@@ -39,11 +50,15 @@ class Button extends Phaser.GameObjects.Sprite {
         }
 
         // Toggles Button Images
+       // if(this.playclick==false){
+            
         if (this.isClickable == true) {
+            //this.play('b');  
             this.setFrame(0);
-        } else {
-            this.setFrame(1);
-        }
+        } /*else {
+            this.setFrame(4);
+        }  */
+        //}else{this.play('b');}
 
         
     }
@@ -51,6 +66,7 @@ class Button extends Phaser.GameObjects.Sprite {
 
     reset() {
         this.isClickable = false;
+        this.playclick = false;
         this.refreshTime = 60;
     }
 }

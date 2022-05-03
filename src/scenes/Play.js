@@ -16,30 +16,19 @@ class Play extends Phaser.Scene {
         enemySpeed = -2.5;
         this.maxEnemySpeed = -200;
         score = 0;
+        this.oncepersec = true;
 
         this.bg_music = this.sound.add('bg_music', {
             mute: false,
-            volume: 0.5,
+            volume: 0.4,
             rate: 1.2,
             loop: true 
         });
 
         this.bg_music.play();
+        
 
-
-        //CREATE bug/obstacle/ghost ANIMATIONS
-        this.anims.create({
-            key: 'bugsprite',            
-            frames: this.anims.generateFrameNumbers('bugsprite', {start: 0, end: 1, first: 0}),
-            frameRate: 8,
-            repeat: -1
-        });
-        this.anims.create({
-            key: 'hurtbug',            
-            frames: this.anims.generateFrameNumbers('hurtbug', {start: 0, end: 1, first: 0}),
-            frameRate: 50,
-            repeat: 0
-        });
+        //CREATE ghost/obstacle ANIMATIONS
         this.anims.create({
             key: 'ghostWalk',            
             frames: this.anims.generateFrameNumbers('ghost', {start: 0, end: 4, first: 0}),
@@ -47,6 +36,7 @@ class Play extends Phaser.Scene {
             yoyo: true,
             repeat: -1
         });
+       
 
         //place back ground 
         this.magicworld = this.add.tileSprite(0, 0, 480, game.config.height * (2/3), 'magicworld').setOrigin(0);
@@ -87,16 +77,16 @@ class Play extends Phaser.Scene {
         this.blocker.setImmovable(true);
         this.player = this.physics.add.sprite(100,100,'miku'); 
         this.player.anims.play("right");
-        this.player.setScale(0.75);
+        this.player.setScale(0.50);
         this.player.setCollideWorldBounds(true);  
         this.physics.add.collider(this.player, this.blocker);
 
 
         // Score
         let scoreConfig = {
-            fontFamily: 'Courier',
+            fontFamily: 'fantasy',
             fontSize: '28px',
-            //backgroundColor: '#F3B141',
+            //backgroundColor: '#0000',
             color: '#ffffff',
             align: 'left',
             padding: {
@@ -105,7 +95,8 @@ class Play extends Phaser.Scene {
             },
         }
 
-        this.scoreText = this.add.text(20, 20, "0:00", scoreConfig);
+        this.add.image(16, 16, 'scoreback').setOrigin(0,0).setScale(1.1);
+        this.scoreText = this.add.text(26, 20, "0:00", scoreConfig);
 
 
         // move player to the clicked/tapped position AND PLAY DIRECTIONAL ANIMATION
@@ -138,7 +129,7 @@ class Play extends Phaser.Scene {
         this.testButtons = this.add.group();
         for (let i = 0; i < 4; i++) {
             for (let j = 0; j < 3; j++) {
-                let testButton = new Button(this, 118 + (88 * i), game.config.height * (2/3) + 10 + (70 * j), 'button', 0, this.hp).setOrigin(0, 0);
+                let testButton = new Button(this, 118 + (88 * i), game.config.height * (2/3) + 5 + (70 * j), 'button', 0, this.hp).setOrigin(0, 0);
                 this.testButtons.add(testButton);
             }
         }
@@ -194,7 +185,17 @@ class Play extends Phaser.Scene {
     }
 
     update() {
-        
+        //play heart noise if hp increases
+        if(this.hp.playsound){
+            this.sound.play('heart');
+            this.hp.playsound = false;
+        }
+        //play heart spawn noise if it spawns
+        for (let i of this.testButtons.getChildren()){
+            if(i.refreshTime == 1){ //use 1 and not 0 since the timer stays at 0 once it runs out - causes sound to play a ton of times super loud 
+                this.sound.play('heartspawn', { volume: 0.2});
+            }
+        }
         //Make player have "right" animation if they are not currently moving 
         //and the "right" animation is not already playing 
         //(this happens when player finishes moving left,up, or down.)
@@ -253,5 +254,11 @@ class Play extends Phaser.Scene {
                 this.sound.play('ghost_die', { volume: 0.3 });
             }
         }
+        //if player die
+        if(this.hp.getHP() <= 0){
+            this.scene.start('deathScene');
+            this.bg_music.pause();
+        }
+
     }
 }
