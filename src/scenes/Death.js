@@ -22,11 +22,13 @@ class Death extends Phaser.Scene {
 
         this.nextButton.on('pointerdown', () => {
             this.deathmusic2.pause()
+            this.sound.play('selectsound');
             this.scene.start('playScene');
         });
 
         this.backButton.on('pointerdown', () => {
             this.deathmusic2.pause()
+            this.sound.play('selectsound');
             this.scene.start('menuScene');
         });
 

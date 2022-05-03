@@ -174,7 +174,6 @@ class Play extends Phaser.Scene {
             this.scoreText.setText(Math.floor(score / 60) + ":" + score % 60);
         }
         if(score%5 == 0 && score>15){
-            console.log("decrease");
             enemySpeed-=2;
         }
     }

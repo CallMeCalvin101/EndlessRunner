@@ -11,6 +11,7 @@ class Load extends Phaser.Scene {
         this.load.audio('ghost_die', './assets/ghost_die.wav');
         this.load.audio('bg_music', './assets/bg_music.wav');
         this.load.audio('deathmusic2', './assets/deathmusic2.wav');
+        this.load.audio('selectsound', './assets/selectsound.wav');
         // All title assets
         this.load.image('title','./assets/startscreen.png');
         this.load.image('instructions','./assets/introduction_3.png');
@@ -51,7 +52,7 @@ class Load extends Phaser.Scene {
         }
 
         // go to Title scene
-        //this.scene.start('menuScene');
-        this.scene.start('playScene');
+        this.scene.start('menuScene');
+        // this.scene.start('playScene');
     }
 }
