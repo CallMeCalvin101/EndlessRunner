@@ -17,10 +17,12 @@ class Play extends Phaser.Scene {
         this.maxEnemySpeed = -200;
         score = 0;
         this.oncepersec = true;
+        this.gameOver = false;
+        this.playerAlpha = 1;
 
         this.bg_music = this.sound.add('bg_music', {
             mute: false,
-            volume: 0.4,
+            volume: 0.2,
             rate: 1.2,
             loop: true 
         });
@@ -32,6 +34,14 @@ class Play extends Phaser.Scene {
         this.anims.create({
             key: 'ghostWalk',            
             frames: this.anims.generateFrameNumbers('ghost', {start: 0, end: 4, first: 0}),
+            frameRate: 4,
+            yoyo: true,
+            repeat: -1
+        });
+
+        this.anims.create({
+            key: 'ghostBounce',            
+            frames: this.anims.generateFrameNumbers('bounceGhost', {start: 0, end: 4, first: 0}),
             frameRate: 4,
             yoyo: true,
             repeat: -1
@@ -105,28 +115,30 @@ class Play extends Phaser.Scene {
         // move player to the clicked/tapped position AND PLAY DIRECTIONAL ANIMATION
         this.input.on('pointerdown', function (gamePointer)
         {
-            //this.arrow.setPosition(gamePointer.x, gamePointer.y);
-            if(gamePointer.y<2*game.config.height/3){
-            this.ptr.x=gamePointer.x;
-            this.ptr.y=gamePointer.y;
-            if (this.ptr.y < 2*game.config.height/3 - 15) {
-                this.point.setX(this.ptr.x);
-                this.point.setY(this.ptr.y + 15);
+            if (this.gameOver == false) {
+                //this.arrow.setPosition(gamePointer.x, gamePointer.y);
+                if(gamePointer.y<2*game.config.height/3){
+                this.ptr.x=gamePointer.x;
+                this.ptr.y=gamePointer.y;
+                if (this.ptr.y < 2*game.config.height/3 - 15) {
+                    this.point.setX(this.ptr.x);
+                    this.point.setY(this.ptr.y + 15);
+                }
+                let xdifference = (Math.abs((Math.abs(this.player.x)) - (Math.abs(this.ptr.x))));
+                let ydifference = (Math.abs((Math.abs(this.player.y)) - (Math.abs(this.ptr.y))));
+                if(xdifference > ydifference){  
+                    this.sound.play('walk3');
+                    //if player is moving more horizontal than vertical
+                    if(this.player.x<this.ptr.x){this.player.play('right');}
+                    else{this.player.play('left');}
+                }
+                if(ydifference > xdifference){  //if player is moving more vertical than horizontal
+                    this.sound.play('walk3');
+                    if(this.player.y<this.ptr.y){this.player.play('down');}
+                    else{this.player.play('up');}
+                }
+                this.physics.moveToObject(this.player, gamePointer, this.MAX_SPEED); } //player speed, can always change 
             }
-            let xdifference = (Math.abs((Math.abs(this.player.x)) - (Math.abs(this.ptr.x))));
-            let ydifference = (Math.abs((Math.abs(this.player.y)) - (Math.abs(this.ptr.y))));
-            if(xdifference > ydifference){  
-                this.sound.play('walk3');
-                //if player is moving more horizontal than vertical
-                if(this.player.x<this.ptr.x){this.player.play('right');}
-                else{this.player.play('left');}
-            }
-            if(ydifference > xdifference){  //if player is moving more vertical than horizontal
-                this.sound.play('walk3');
-                if(this.player.y<this.ptr.y){this.player.play('down');}
-                else{this.player.play('up');}
-            }
-            this.physics.moveToObject(this.player, gamePointer, this.MAX_SPEED); } //player speed, can always change 
         },this)
         
         // Add a new hp bar deatures: Hp.increase(var) Hp.decrease(var);
@@ -164,8 +176,8 @@ class Play extends Phaser.Scene {
     }
 
     addBouncingEnemy() {
-        let enemy = new BouncingObstacle(this, enemySpeed, 'ghost');
-        enemy.play("ghostWalk");
+        let enemy = new BouncingObstacle(this, enemySpeed, 'bounceGhost');
+        enemy.play("ghostBounce");
         this.obstacleGroup.add(enemy);
     }
     
@@ -179,6 +191,7 @@ class Play extends Phaser.Scene {
         this.clearEnemies();
         this.time.delayedCall(2000, () => {
             this.waveType = (Math.floor(Math.random() * 4));
+            this.waveType = 3;
             if (this.waveType == 1) {
                 for (let i = 0; i < 4; i++){
                     this.addAcceleratingEnemy();
@@ -235,7 +248,7 @@ class Play extends Phaser.Scene {
                 });
             }
 
-            if (score % 10 == 0 && enemySpeed > this.maxEnemySpeed) {
+            if (score % 10 == 0 && enemySpeed > this.maxEnemySpeed && score >= 20) {
                 enemySpeed -= 10;
             }
 
@@ -316,10 +329,19 @@ class Play extends Phaser.Scene {
             }
         }
         //if player die
-        if(this.hp.getHP() <= 0){
-            this.scene.start('deathScene');
+        if(this.hp.getHP() <= 0 && this.gameOver == false){
+            this.gameOver = true;
+            this.player.setVelocityY(0);
+            this.player.setVelocityY(1);
+            this.time.delayedCall(5000, () => {
+                this.scene.start('deathScene');
+            });
             this.bg_music.pause();
         }
 
+        if (this.playerAlpha > 0 && this.gameOver == true) {
+            this.playerAlpha -= 0.01;
+            this.player.setAlpha(this.playerAlpha);
+        }
     }
 }

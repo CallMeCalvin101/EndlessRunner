@@ -1,8 +1,7 @@
 class AcceleratingObstacle extends Obstacle {
     constructor(scene, velocity, texture) {
         // call Phaser Physics Sprite constructor
-        super(scene, 1, texture); 
-        
+        super(scene, 1, texture);         
         this.acceleration = -100 + (velocity / 2);
         this.slow = true;
     }

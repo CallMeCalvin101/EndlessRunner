@@ -2,7 +2,6 @@ class BouncingObstacle extends Obstacle {
     constructor(scene, velocity, texture) {
         // call Phaser Physics Sprite constructor
         super(scene, velocity, texture); 
-        
         this.ySpeed = 50;
         this.yDir = (Math.floor(Math.random() * 2));
         if (this.yDir == 0) {
