@@ -161,6 +161,12 @@ class Play extends Phaser.Scene {
         enemy.play("ghostWalk");
         this.obstacleGroup.add(enemy);
     }
+    
+    addAcceleratingEnemy() {
+        let enemy = new AcceleratingObstacle(this, enemySpeed, 'ghost');
+        enemy.play("ghostWalk");
+        this.obstacleGroup.add(enemy);
+    }
 
     addScore() {
         score += 1;
@@ -172,6 +178,7 @@ class Play extends Phaser.Scene {
 
         if (score > 1) {
             if (score == 2) {
+                this.addAcceleratingEnemy();
                 this.addBouncingEnemy();
                 this.addEnemy();
             } else if (score == 10) {
