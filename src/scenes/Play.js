@@ -75,6 +75,9 @@ class Play extends Phaser.Scene {
         // player
         this.blocker= this.physics.add.image(game.config.width/2,2*game.config.height/3,'blocker');
         this.blocker.setImmovable(true);
+
+        this.point = this.physics.add.sprite(-100, 0, 'pointer').setOrigin(0.5);
+
         this.player = this.physics.add.sprite(100,100,'miku'); 
         this.player.anims.play("right");
         this.player.setScale(0.50);
@@ -103,9 +106,13 @@ class Play extends Phaser.Scene {
         this.input.on('pointerdown', function (gamePointer)
         {
             //this.arrow.setPosition(gamePointer.x, gamePointer.y);
-            if(gamePointer.y<=2*game.config.height/3){
+            if(gamePointer.y<2*game.config.height/3){
             this.ptr.x=gamePointer.x;
             this.ptr.y=gamePointer.y;
+            if (this.ptr.y < 2*game.config.height/3 - 15) {
+                this.point.setX(this.ptr.x);
+                this.point.setY(this.ptr.y + 15);
+            }
             let xdifference = (Math.abs((Math.abs(this.player.x)) - (Math.abs(this.ptr.x))));
             let ydifference = (Math.abs((Math.abs(this.player.y)) - (Math.abs(this.ptr.y))));
             if(xdifference > ydifference){  
@@ -188,7 +195,7 @@ class Play extends Phaser.Scene {
             } else {
                 this.addEnemy();
                 this.addEnemy();
-                this.time.delayedCall(750, () => {
+                this.time.delayedCall(1500, () => {
                     this.addEnemy();
                     this.addEnemy();
                 });
