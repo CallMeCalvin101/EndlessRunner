@@ -14,6 +14,7 @@ class Play extends Phaser.Scene {
         this.ONE_SEC = 60;
         this.emenyHPLoss = 30;
         enemySpeed = -2.5;
+        this.maxEnemySpeed = -200;
         score = 0;
 
         this.bg_music = this.sound.add('bg_music', {
@@ -75,9 +76,7 @@ class Play extends Phaser.Scene {
             repeat: -1
         });
         this.anims.create({
-
             key: 'up',            
-
             frames: this.anims.generateFrameNumbers('miku', {start: 9, end: 11, first: 9}),
             frameRate: 4,
             repeat: -1
@@ -150,17 +149,6 @@ class Play extends Phaser.Scene {
             runChildUpdate: true    // make sure update runs on group children
         })
 
-        this.time.delayedCall(2500, () => { 
-            this.addEnemy(); 
-        });
-
-        this.time.delayedCall(2500, () => { 
-            this.addEnemy(); 
-        });
-
-        this.time.delayedCall(2500 * 5, () => { 
-            this.addEnemy(); 
-        });
 
         // set up difficulty timer (triggers callback every second)
         this.scoreTimer = this.time.addEvent({
@@ -177,12 +165,31 @@ class Play extends Phaser.Scene {
         this.obstacleGroup.add(enemy);
     }
 
+    addBouncingEnemy() {
+        let enemy = new BouncingObstacle(this, enemySpeed, 'ghost');
+        enemy.play("ghostWalk");
+        this.obstacleGroup.add(enemy);
+    }
+
     addScore() {
         score += 1;
-        if (score < 10) {
-            this.scoreText.setText("0:0" + score);
+        if (score % 60 < 10) {
+            this.scoreText.setText("0:0" + score % 60);
         } else {
             this.scoreText.setText(Math.floor(score / 60) + ":" + score % 60);
+        }
+
+        if (score > 1) {
+            if (score == 2) {
+                this.addBouncingEnemy();
+                this.addEnemy();
+            } else if (score == 10) {
+                this.addEnemy();
+            }
+
+            if (score % 10 == 0 && enemySpeed > this.maxEnemySpeed) {
+                enemySpeed -= 10;
+            }
         }
     }
 
@@ -195,7 +202,7 @@ class Play extends Phaser.Scene {
         if(anim == "right"){}
         else{
             if(this.player.body.velocity.x == 0){this.player.anims.play("right")}
-            }
+        }
 
         //Scrolls BG
         this.magicworld.tilePositionX += 1;
