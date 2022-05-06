@@ -1,6 +1,7 @@
 class Obstacle extends Phaser.Physics.Arcade.Sprite {
     constructor(scene, velocity, texture) {
         // call Phaser Physics Sprite constructor
+        // Inspired by https://github.com/nathanaltice/PaddleParkourP3
         super(scene, game.config.width, Phaser.Math.Between(40, (game.config.height * (2/3) - 40)), texture); 
         // set up physics sprite
         scene.add.existing(this);               // add to existing scene, displayList, updateList
